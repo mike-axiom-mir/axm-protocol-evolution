@@ -28,3 +28,7 @@ jobs:
         run: python tools/lineage_readiness.py > /tmp/lineage_readiness.json
       - name: Assert lineage readiness is valid JSON
         run: python -m json.tool /tmp/lineage_readiness.json > /dev/null
+      - name: Generate chain experiment readiness
+        run: python tools/chain_experiment_readiness.py > /tmp/chain_experiment_readiness.json
+      - name: Assert chain experiment readiness is valid JSON
+        run: python -m json.tool /tmp/chain_experiment_readiness.json > /dev/null

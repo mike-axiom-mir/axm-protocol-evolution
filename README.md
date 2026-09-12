@@ -23,7 +23,9 @@ The bounded corpus now contains six real AXM generation fixtures from two reposi
 - FrameState project v0.4 semantics;
 - FrameState project v0.5 semantics.
 
-The original five-fixture corpus target is exceeded. **That is still not one five-generation migration chain.** The fixtures currently form two declared semantic lineages: City Multiplayer has 2 admitted handshake generations and FrameState has 4 admitted project generations. The longest current lineage is therefore 4, and the intended five-generation chain-vs-direct experiment remains HOLD until one real same-domain lineage reaches five admitted generations and migration paths are evidenced.
+The original five-fixture corpus target is exceeded. **That is still not one five-generation migration chain.** The fixtures currently form two declared semantic lineages: City Multiplayer has 2 admitted handshake generations and FrameState has 4 admitted project generations. The longest current lineage is therefore 4.
+
+A second gate is now explicit: even a five-generation lineage is not input-ready for the chain-vs-direct experiment until every ordered adjacent pair has an admitted migration-path evidence reference. `fixtures/migration_paths.json` currently admits **zero** paths. FrameState therefore has three explicit missing adjacent edges (v0.1 -> v0.2, v0.2 -> v0.4, v0.4 -> v0.5), while City Multiplayer has one (G1 -> G2). No migration path is inferred from version numbers, lineage adjacency, or reader compatibility.
 
 The current executable questions are:
 
@@ -36,6 +38,7 @@ The current executable questions are:
 7. Can individually binding-valid migration receipts still fail to form a continuous declared chain?
 8. Can a multi-fixture cross-domain corpus be prevented from masquerading as one five-generation migration lineage?
 9. Can two same-domain generations with no shared tested semantic claim remain explicitly unjudged instead of being mislabeled incompatible?
+10. Can a lineage with enough generations still be prevented from masquerading as chain-experiment-ready when adjacent migration-path evidence is missing?
 
 The FrameState v0.2 and v0.4 fixtures deliberately test question 5: both preserve undeclared speech as eSpeak, while v0.5 changes that default to the native engine. Therefore a version-number change alone is not evidence of semantic change.
 
@@ -46,6 +49,8 @@ Receipt binding verification deliberately has a narrower claim: it checks the re
 Receipt-chain verification is narrower again: every receipt must pass the binding check, the first/last receipts can be bound to supplied endpoint values, and each receipt's target digest must exactly equal the next receipt's source digest. It does **not** prove the transformations ran, the semantic labels are true, or that a chained migration is equivalent or preferable to a direct migration.
 
 Lineage readiness keeps another boundary explicit: total corpus size is not chain length. `fixtures/lineages.json` declares only the admitted research-fixture ordering within each semantic domain. It does **not** claim those fixtures cover every historical release, that the sequence is contiguous, or that migration paths exist between each pair.
+
+Chain-experiment input readiness adds the next boundary: an adjacent path must be explicitly admitted with evidence references for the exact ordered pair. The catalog is still not execution proof; its evidence references are not independently verified by the readiness analyzer, and semantic/direct-migration equivalence remains unproven until separately tested.
 
 ## Donor boundary
 
@@ -69,6 +74,7 @@ No third-party runtime dependencies are required.
 python -m unittest discover -s tests -v
 python tools/survivability_matrix.py
 python tools/lineage_readiness.py
+python tools/chain_experiment_readiness.py
 ```
 
 ## Current evidence claim
@@ -86,5 +92,7 @@ The bounded fixture tests currently establish narrow claims only:
 > Individually binding-valid receipts do not prove a continuous migration chain; adjacent target/source digests must also connect exactly.
 
 > More than five real fixtures still do not prove one five-generation chain; same-lineage membership must be explicit and domain-consistent.
+
+> Five same-lineage generations would still not prove chain-experiment input readiness; every adjacent migration path must be explicitly admitted with evidence references, and admission still does not prove execution or semantic equivalence.
 
 See `evidence/` for exact limits and action reports.

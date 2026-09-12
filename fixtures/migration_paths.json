@@ -1,0 +1,9 @@
+{
+  "schema": "axm.protocol-evolution.migration-path-admissions/v0.1",
+  "paths": [],
+  "notes": [
+    "Adjacency in fixtures/lineages.json does not itself prove a migration path exists.",
+    "A path may be admitted only with explicit evidence references for that exact ordered adjacent pair.",
+    "No adjacent migration path has been admitted yet; absence stays visible rather than being inferred from reader compatibility or version numbers."
+  ]
+}
