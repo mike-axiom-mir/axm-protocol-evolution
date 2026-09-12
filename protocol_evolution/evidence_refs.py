@@ -22,7 +22,7 @@ def _failure(ref: Any, reason: str) -> dict[str, Any]:
 
 
 def inspect_pinned_github_reference(ref: Any) -> dict[str, Any]:
-    """Inspect one donor evidence URL for immutable full-SHA pinning.
+    """Inspect one donor evidence URL for full-SHA structural pinning.
 
     Supported evidence carriers are deliberately narrow: GitHub commit URLs,
     blob URLs pinned to a full commit SHA, and compare URLs whose two endpoints
@@ -102,7 +102,7 @@ def analyze_evidence_reference_integrity(
     path_catalog: Mapping[str, Any],
     investigation_catalog: Mapping[str, Any],
 ) -> dict[str, Any]:
-    """Verify immutable pinning for donor refs in the checked-in edge catalogs."""
+    """Verify full-SHA structural pinning for donor refs in checked-in edge catalogs."""
     failures: list[str] = []
     records: list[dict[str, Any]] = []
     total_reference_count = 0
