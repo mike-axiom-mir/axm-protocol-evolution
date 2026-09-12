@@ -16,6 +16,7 @@
       "id": "framestate-project",
       "domain": "framestate.project",
       "generations": [
+        "framestate-project-v0.1",
         "framestate-project-v0.2",
         "framestate-project-v0.4",
         "framestate-project-v0.5"
