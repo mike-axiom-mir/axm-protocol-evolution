@@ -129,7 +129,7 @@ def analyze_generation_lineages(
         "lineage_count": len(lineage_results),
         "target_length": target_length,
         "max_lineage_length": max_lineage_length,
-        "five_fixture_corpus_is_not_five_generation_chain": len(by_id) >= target_length and max_lineage_length < target_length,
+        "fixture_count_meets_target_but_no_lineage_does": len(by_id) >= target_length and max_lineage_length < target_length,
         "chain_ready": bool(ready_lineages) and not failures,
         "ready_lineages": ready_lineages,
         "lineages": lineage_results,
