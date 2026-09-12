@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://axm.local/protocol-evolution/negotiation-result.schema.json",
+  "title": "AXM Protocol Evolution Negotiation Result",
+  "type": "object",
+  "required": ["state", "shared", "missing_required"],
+  "additionalProperties": false,
+  "properties": {
+    "state": {"enum": ["SAME", "LOSSLESS_MIGRATION", "LOSSY_VISIBLE", "UNKNOWN_FIELD_PRESERVED", "UNSUPPORTED", "AMBIGUOUS", "REFUSE"]},
+    "shared": {"type": "object", "additionalProperties": {"type": "string"}},
+    "missing_required": {"type": "array", "items": {"type": "string"}}
+  }
+}

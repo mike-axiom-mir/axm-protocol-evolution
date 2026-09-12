@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://axm.local/protocol-evolution/semantic-assertion.schema.json",
+  "title": "AXM Protocol Evolution Semantic Assertion",
+  "type": "object",
+  "required": ["id", "subject", "value", "source"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "subject": {"type": "string", "minLength": 1},
+    "value": {},
+    "source": {
+      "type": "object",
+      "required": ["repository", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "ref": {"type": "string", "minLength": 1},
+        "path": {"type": "string"}
+      }
+    },
+    "note": {"type": "string"}
+  }
+}

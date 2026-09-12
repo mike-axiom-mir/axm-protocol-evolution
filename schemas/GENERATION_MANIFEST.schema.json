@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://axm.local/protocol-evolution/generation-manifest.schema.json",
+  "title": "AXM Protocol Evolution Generation Manifest",
+  "type": "object",
+  "required": ["id", "domain", "repository", "source_ref", "artifact", "semantic_claims"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "domain": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "minLength": 1},
+    "source_ref": {"type": "string", "minLength": 1},
+    "artifact": {"type": "string", "minLength": 1},
+    "semantic_claims": {"type": "object"},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}

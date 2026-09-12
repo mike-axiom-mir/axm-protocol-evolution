@@ -1,0 +1,15 @@
+{
+  "id": "speech-default-proof",
+  "title": "speech default proof",
+  "canvas": {"width": 64, "height": 64, "fps": 24},
+  "duration_frames": 24,
+  "background": [0, 0, 0],
+  "media": [],
+  "layers": [],
+  "captions": [],
+  "audio": [{"id": "voice", "kind": "speech", "start_frame": 0, "end_frame": 24, "text": "hello", "gain_milli": 1000, "pan_milli": 0, "loop": false, "source_start_frame": 0}],
+  "effects": [],
+  "markers": [],
+  "metadata": {},
+  "schema": "axm.framestate.project/v0.4"
+}

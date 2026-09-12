@@ -1,0 +1,9 @@
+{
+  "t": "HELLO",
+  "pv": 2,
+  "s": "example-session",
+  "g": "example-game",
+  "b": "build-a",
+  "n": "guest-nonce",
+  "m": "example-mac"
+}

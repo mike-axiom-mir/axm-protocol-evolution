@@ -1,0 +1,9 @@
+{
+  "id": "framestate-project-v0.4",
+  "domain": "framestate.project",
+  "repository": "mike-axiom-mir/axm-framestate",
+  "source_ref": "60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34",
+  "artifact": "project.json",
+  "semantic_claims": {"undeclared_speech_engine": "espeak"},
+  "notes": ["Current canonical reader explicitly preserves v0.4-and-earlier undeclared speech engine as espeak."]
+}

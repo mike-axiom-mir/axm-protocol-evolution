@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://axm.local/protocol-evolution/migration-receipt.schema.json",
+  "title": "AXM Protocol Evolution Migration Receipt",
+  "type": "object",
+  "required": ["schema", "source_digest", "target_digest", "transformer", "compatibility_state", "losses", "ambiguities", "receipt_digest"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "axm.protocol-evolution.migration-receipt/v0.1"},
+    "source_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "target_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "transformer": {"type": "string", "minLength": 1},
+    "compatibility_state": {"enum": ["SAME", "LOSSLESS_MIGRATION", "LOSSY_VISIBLE", "UNKNOWN_FIELD_PRESERVED", "UNSUPPORTED", "AMBIGUOUS", "REFUSE"]},
+    "losses": {"type": "array", "items": {"type": "string"}},
+    "ambiguities": {"type": "array", "items": {"type": "string"}},
+    "assertions_checked": {"type": "array", "items": {"type": "string"}},
+    "receipt_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}
