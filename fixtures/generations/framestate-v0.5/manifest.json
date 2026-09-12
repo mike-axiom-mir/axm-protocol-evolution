@@ -1,0 +1,9 @@
+{
+  "id": "framestate-project-v0.5",
+  "domain": "framestate.project",
+  "repository": "mike-axiom-mir/axm-framestate",
+  "source_ref": "60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34",
+  "artifact": "project.json",
+  "semantic_claims": {"undeclared_speech_engine": "native"},
+  "notes": ["Current canonical reader defaults undeclared v0.5 speech engine to native."]
+}

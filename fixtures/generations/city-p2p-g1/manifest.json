@@ -1,0 +1,9 @@
+{
+  "id": "city-p2p-handshake-g1",
+  "domain": "city.multiplayer.handshake",
+  "repository": "mike-axiom-mir/axm-city-multiplayer",
+  "source_ref": "d3b1bfb79d4e997781037ce0723c193be5f5df7a",
+  "artifact": "packet.json",
+  "semantic_claims": {"protocol_version": 1, "admission_proof": "WELCOME", "ack_required": false},
+  "notes": ["Historical reference commit added authenticated direct UDP join handshake."]
+}

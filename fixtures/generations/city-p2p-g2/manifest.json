@@ -1,0 +1,9 @@
+{
+  "id": "city-p2p-handshake-g2",
+  "domain": "city.multiplayer.handshake",
+  "repository": "mike-axiom-mir/axm-city-multiplayer",
+  "source_ref": "241c613b58cf624bb852d84aba1136f2f61e91f3",
+  "artifact": "packet.json",
+  "semantic_claims": {"protocol_version": 2, "admission_proof": "ACK", "ack_required": true},
+  "notes": ["Later reference requires HELLO -> WELCOME -> authenticated ACK -> admitted peer."]
+}
