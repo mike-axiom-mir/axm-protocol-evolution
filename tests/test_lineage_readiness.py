@@ -16,7 +16,7 @@ class LineageReadinessTests(unittest.TestCase):
         self.assertTrue(result["valid"])
         self.assertEqual(result["fixture_count"], 5)
         self.assertEqual(result["max_lineage_length"], 3)
-        self.assertTrue(result["five_fixture_corpus_is_not_five_generation_chain"])
+        self.assertTrue(result["fixture_count_meets_target_but_no_lineage_does"])
         self.assertFalse(result["chain_ready"])
         self.assertEqual(result["ready_lineages"], [])
 
