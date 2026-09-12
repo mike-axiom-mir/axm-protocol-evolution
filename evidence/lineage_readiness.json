@@ -2,8 +2,8 @@
   "chain_ready": false,
   "contiguous_release_history_proven": false,
   "failures": [],
-  "five_fixture_corpus_is_not_five_generation_chain": true,
   "fixture_count": 5,
+  "fixture_count_meets_target_but_no_lineage_does": true,
   "lineage_count": 2,
   "lineages": [
     {
