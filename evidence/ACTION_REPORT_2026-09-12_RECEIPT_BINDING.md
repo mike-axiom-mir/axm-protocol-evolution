@@ -4,13 +4,13 @@ Date: 2026-09-12
 
 ## Question tested
 
-Can a migration receipt prove that it still binds to the exact supplied source/target payloads and its recorded bytes without pretending that a plain SHA-256 self-digest proves authorship, execution, or semantic truth?
+Can a migration receipt prove that it still binds to the same canonical source/target values and canonical receipt content without pretending that a plain SHA-256 self-digest proves authorship, execution, original serialization bytes, or semantic truth?
 
 ## Falsifier defined before implementation
 
 This cycle fails if any of these conditions hold:
 
-1. a receipt verifies against a different supplied target payload;
+1. a receipt verifies against a different supplied target value;
 2. mutating a recorded receipt field without updating the receipt digest still verifies;
 3. adding an out-of-contract field and recomputing the self-digest silently expands the receipt contract;
 4. the verifier claims that a self-consistent receipt proves authorship or semantic correctness.
@@ -28,7 +28,7 @@ A deliberate negative-boundary test also rewrites the compatibility state and re
 ## Exact delta
 
 - Added `verify_migration_receipt_binding()`.
-- Verification checks the existing v0.1 receipt contract shape, declared compatibility-state vocabulary, SHA-256 field shape, receipt self-digest, and optional supplied source/target digests.
+- Verification checks the existing v0.1 receipt contract shape, declared compatibility-state vocabulary, SHA-256 field shape, canonical receipt self-digest, and optional supplied source/target canonical-value digests.
 - The runtime result explicitly declares the bounded scope: `receipt-self-digest-and-supplied-payload-identity`.
 - The result always states that authenticity and semantic truth are not proven by this verifier.
 - Added five focused regression tests covering valid binding, wrong-target rejection, mutation detection, out-of-contract field rejection, and the self-consistent-rewrite limitation.
@@ -36,11 +36,12 @@ A deliberate negative-boundary test also rewrites the compatibility state and re
 
 ## Evidence state before merge
 
-The branch must pass the existing GitHub verification workflow before merge. CI success proves only that the authored regressions and existing repository tests pass in the configured Python environments. It does not upgrade the receipt into a signature, trusted timestamp, execution proof, or semantic oracle.
+The branch must pass the existing GitHub verification workflow before merge. CI success proves only that the authored regressions and existing repository tests pass in the configured Python environments. It does not upgrade the receipt into a signature, trusted timestamp, execution proof, byte-for-byte serialization proof, or semantic oracle.
 
 ## Known limits
 
-- SHA-256 here is an integrity/binding primitive, not identity authentication.
+- SHA-256 here is an integrity/binding primitive over canonical JSON values, not identity authentication.
+- Canonical JSON intentionally normalizes representation details such as object key order and insignificant whitespace; original serialized bytes are not proven.
 - A party able to rewrite the receipt can recompute its self-digest.
 - The verifier does not prove that the named transformer executed.
 - The verifier does not independently judge whether `compatibility_state`, losses, ambiguities, or assertions are semantically correct.
@@ -49,7 +50,7 @@ The branch must pass the existing GitHub verification workflow before merge. CI 
 
 ## Root check
 
-**Truth:** the verifier exposes what a plain digest can and cannot prove; the negative-boundary test prevents a self-hash from being mislabeled authentication.
+**Truth:** the verifier exposes what a plain canonical-content digest can and cannot prove; the negative-boundary test prevents a self-hash from being mislabeled authentication or byte-for-byte serialization evidence.
 
 **Agency / non-domination:** the receipt grants no merge, migration, execution, device, network, publish, or canon authority.
 
