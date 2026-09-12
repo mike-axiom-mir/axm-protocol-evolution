@@ -14,21 +14,25 @@ The roots are the merge gate. Passing tests proves only the claims those tests m
 
 ## First research floor
 
-The initial bounded experiment contains four real AXM generation fixtures from two repositories:
+The bounded corpus now contains five real AXM generation fixtures from two repositories:
 
 - City Multiplayer handshake generation 1;
 - City Multiplayer handshake generation 2;
+- FrameState project v0.2 semantics;
 - FrameState project v0.4 semantics;
 - FrameState project v0.5 semantics.
 
-The research ladder calls for five real generations. The fifth fixture is intentionally **OPEN** rather than fabricated.
+The original five-generation fixture target is now met. This does **not** mean the five-generation migration-chain experiment is complete; it only means the historical corpus is large enough to begin that experiment without fabricating a generation.
 
-The first executable questions are:
+The current executable questions are:
 
 1. Can a parser-compatible migration still change meaning?
 2. Can unknown future fields survive an older intermediary?
 3. Can two versions negotiate exact capabilities instead of assuming version numbers imply feature equivalence?
 4. Can compatibility evidence be receipted without granting migration or canon authority?
+5. Can two different schema versions preserve the same tested meaning?
+
+The FrameState v0.2 and v0.4 fixtures deliberately test question 5: both preserve undeclared speech as eSpeak, while v0.5 changes that default to the native engine. Therefore a version-number change alone is not evidence of semantic change.
 
 ## Donor boundary
 
@@ -55,8 +59,10 @@ python tools/survivability_matrix.py
 
 ## Current evidence claim
 
-The foundation tests demonstrate a bounded claim only:
+The bounded fixture tests currently establish two narrow claims:
 
 > Serialization or parsing success does not prove semantic compatibility.
 
-See `evidence/ACTION_REPORT.md` for exact limits.
+> A version-number difference does not prove semantic incompatibility.
+
+See `evidence/` for exact limits and action reports.

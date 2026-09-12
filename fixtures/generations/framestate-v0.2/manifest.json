@@ -1,0 +1,14 @@
+{
+  "id": "framestate-project-v0.2",
+  "domain": "framestate.project",
+  "repository": "mike-axiom-mir/axm-framestate",
+  "source_ref": "5d46363fb30bf5d30198b8cdec473d3bb9ba6287",
+  "source_path": "examples/narrated_motion.json",
+  "source_blob_sha": "cf6568ff0cb7384d03f3e7f807670e06e34e9820",
+  "artifact": "project.json",
+  "semantic_claims": {"undeclared_speech_engine": "espeak"},
+  "notes": [
+    "Exact historical v0.2 example is preserved byte-for-byte as project.json.",
+    "At the same source ref, src/axm_framestate/audio.py resolves speech through espeak/espeak-ng, so v0.2 shares the historical undeclared-speech meaning retained by v0.4-and-earlier."
+  ]
+}
