@@ -24,3 +24,7 @@ jobs:
         run: python tools/survivability_matrix.py > /tmp/generation_matrix.json
       - name: Assert matrix is valid JSON
         run: python -m json.tool /tmp/generation_matrix.json > /dev/null
+      - name: Generate lineage readiness
+        run: python tools/lineage_readiness.py > /tmp/lineage_readiness.json
+      - name: Assert lineage readiness is valid JSON
+        run: python -m json.tool /tmp/lineage_readiness.json > /dev/null

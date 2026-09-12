@@ -1,0 +1,28 @@
+{
+  "schema": "axm.protocol-evolution.generation-lineages/v0.1",
+  "lineages": [
+    {
+      "id": "city-p2p-handshake",
+      "domain": "city.multiplayer.handshake",
+      "generations": [
+        "city-p2p-handshake-g1",
+        "city-p2p-handshake-g2"
+      ],
+      "notes": [
+        "Order lists admitted research fixtures only; it does not claim these are every historical product release."
+      ]
+    },
+    {
+      "id": "framestate-project",
+      "domain": "framestate.project",
+      "generations": [
+        "framestate-project-v0.2",
+        "framestate-project-v0.4",
+        "framestate-project-v0.5"
+      ],
+      "notes": [
+        "Order lists admitted research fixtures only; skipped product versions are not claimed absent."
+      ]
+    }
+  ]
+}
