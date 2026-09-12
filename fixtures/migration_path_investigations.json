@@ -29,6 +29,21 @@
       ],
       "finding": "The v0.4 checkpoint explicitly says the lost uncommitted v0.3 body was rebuilt forward from the surviving v0.1 archive, the safe v0.2 branch, and v0.3 evidence, while advertising v0.1-v0.4 input compatibility. The inspected evidence therefore shows repository recovery plus multi-version reader compatibility, not a demonstrated v0.2-project-to-v0.4-project migration for the admitted fixture.",
       "blocker": "No explicit project-state transformer, migration receipt, or derived v0.4 target artifact for the admitted v0.2 project was identified in the bounded v0.2-to-v0.4 donor scan. Rebuilding the implementation forward from v0.2 source is repository evolution and cannot be admitted as evidence that a v0.2 project artifact was migrated into v0.4."
+    },
+    {
+      "id": "city-p2p-g1-to-g2-audit-2026-09-12",
+      "lineage_id": "city-p2p-handshake",
+      "source_generation": "city-p2p-handshake-g1",
+      "target_generation": "city-p2p-handshake-g2",
+      "status": "HOLD",
+      "evidence_refs": [
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/d3b1bfb79d4e997781037ce0723c193be5f5df7a",
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/a260196340d706a9d5fda9cedb143f50873bca48",
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/558f0fdeba9d41d8e9a45a0ca1b08e53dca84409",
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/compare/d3b1bfb79d4e997781037ce0723c193be5f5df7a...241c613b58cf624bb852d84aba1136f2f61e91f3"
+      ],
+      "finding": "The donor history contains an explicit protocol replacement: generation 1 admits the host-side peer immediately after authenticated HELLO/WELCOME, while the later protocol introduces protocol version 2 and requires authenticated ACK before host admission. The matching regression proves ACK is required and explicitly rejects protocol version 1 at the v2 host. This demonstrates a semantic protocol boundary, not a compatibility bridge from the admitted G1 exchange into G2.",
+      "blocker": "No dual-stack negotiation, packet or state transformer, adapter, migration receipt, or derived G2 exchange bound to the admitted G1 fixture was identified in the bounded 37-commit G1-to-G2 donor compare. The v2 implementation rejects the older protocol version, so repository code evolution alone cannot be admitted as a G1-to-G2 migration path."
     }
   ],
   "notes": [
