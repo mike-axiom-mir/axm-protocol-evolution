@@ -21,10 +21,10 @@ def load_manifests():
 
 def relation(left, right):
     if left["domain"] != right["domain"]:
-        return "NOT_COMPARABLE"
+        return {"comparable": False, "state": None, "reason": "different-domain"}
     if left["semantic_claims"] == right["semantic_claims"]:
-        return CompatibilityState.SAME.value
-    return CompatibilityState.UNSUPPORTED.value
+        return {"comparable": True, "state": CompatibilityState.SAME.value, "reason": "tested-semantic-claims-equal"}
+    return {"comparable": True, "state": CompatibilityState.UNSUPPORTED.value, "reason": "tested-semantic-claims-differ"}
 
 
 def build_matrix():
@@ -32,8 +32,14 @@ def build_matrix():
     rows = []
     for left in manifests:
         for right in manifests:
-            rows.append({"from": left["id"], "to": right["id"], "state": relation(left, right)})
-    return {"schema": "axm.protocol-evolution.survivability-matrix/v0.1", "fixture_count": len(manifests), "research_ladder_target": 5, "fixture_gap": max(0, 5 - len(manifests)), "rows": rows}
+            rows.append({"from": left["id"], "to": right["id"], **relation(left, right)})
+    return {
+        "schema": "axm.protocol-evolution.survivability-matrix/v0.2",
+        "fixture_count": len(manifests),
+        "research_ladder_target": 5,
+        "fixture_gap": max(0, 5 - len(manifests)),
+        "rows": rows,
+    }
 
 
 if __name__ == "__main__":
