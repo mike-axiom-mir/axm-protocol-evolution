@@ -22,9 +22,24 @@ def load_manifests():
 def relation(left, right):
     if left["domain"] != right["domain"]:
         return {"comparable": False, "state": None, "reason": "different-domain"}
-    if left["semantic_claims"] == right["semantic_claims"]:
+
+    left_claims = left["semantic_claims"]
+    right_claims = right["semantic_claims"]
+    if left_claims == right_claims:
         return {"comparable": True, "state": CompatibilityState.SAME.value, "reason": "tested-semantic-claims-equal"}
-    return {"comparable": True, "state": CompatibilityState.UNSUPPORTED.value, "reason": "tested-semantic-claims-differ"}
+
+    common_claims = sorted(set(left_claims) & set(right_claims))
+    if not common_claims:
+        return {"comparable": False, "state": None, "reason": "no-common-semantic-claim"}
+
+    if all(left_claims[key] == right_claims[key] for key in common_claims):
+        return {"comparable": False, "state": None, "reason": "partial-semantic-claim-overlap"}
+
+    return {
+        "comparable": True,
+        "state": CompatibilityState.UNSUPPORTED.value,
+        "reason": "tested-common-semantic-claims-differ",
+    }
 
 
 def build_matrix():
@@ -34,7 +49,7 @@ def build_matrix():
         for right in manifests:
             rows.append({"from": left["id"], "to": right["id"], **relation(left, right)})
     return {
-        "schema": "axm.protocol-evolution.survivability-matrix/v0.2",
+        "schema": "axm.protocol-evolution.survivability-matrix/v0.3",
         "fixture_count": len(manifests),
         "research_ladder_target": 5,
         "fixture_gap": max(0, 5 - len(manifests)),

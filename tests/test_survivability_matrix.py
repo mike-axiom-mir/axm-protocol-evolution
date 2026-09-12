@@ -15,11 +15,12 @@ SPEC.loader.exec_module(MODULE)
 
 
 class MatrixTests(unittest.TestCase):
-    def test_matrix_reaches_five_real_generation_target(self):
+    def test_matrix_tracks_six_real_fixtures_without_moving_target(self):
         matrix = MODULE.build_matrix()
-        self.assertEqual(matrix["fixture_count"], 5)
+        self.assertEqual(matrix["fixture_count"], 6)
         self.assertEqual(matrix["research_ladder_target"], 5)
         self.assertEqual(matrix["fixture_gap"], 0)
+        self.assertEqual(matrix["schema"], "axm.protocol-evolution.survivability-matrix/v0.3")
 
     def test_changed_meaning_is_not_called_compatible(self):
         matrix = MODULE.build_matrix()
@@ -34,10 +35,18 @@ class MatrixTests(unittest.TestCase):
         self.assertEqual(relation[("framestate-project-v0.4", "framestate-project-v0.2")], "SAME")
         self.assertEqual(relation[("framestate-project-v0.2", "framestate-project-v0.5")], "UNSUPPORTED")
 
+    def test_same_domain_without_shared_claim_is_unjudged(self):
+        matrix = MODULE.build_matrix()
+        rows = {(row["from"], row["to"]): row for row in matrix["rows"]}
+        row = rows[("framestate-project-v0.1", "framestate-project-v0.2")]
+        self.assertFalse(row["comparable"])
+        self.assertIsNone(row["state"])
+        self.assertEqual(row["reason"], "no-common-semantic-claim")
+
     def test_cross_domain_pairs_are_unjudged_not_fake_states(self):
         matrix = MODULE.build_matrix()
         rows = {(row["from"], row["to"]): row for row in matrix["rows"]}
-        cross = rows[("city-p2p-handshake-g1", "framestate-project-v0.2")]
+        cross = rows[("city-p2p-handshake-g1", "framestate-project-v0.1")]
         self.assertFalse(cross["comparable"])
         self.assertIsNone(cross["state"])
         self.assertEqual(cross["reason"], "different-domain")
