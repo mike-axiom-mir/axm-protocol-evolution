@@ -1,0 +1,14 @@
+{
+  "id": "framestate-project-v0.1",
+  "domain": "framestate.project",
+  "repository": "mike-axiom-mir/axm-framestate",
+  "source_ref": "5b5f73cb78667d9af981af3b38cd7a7ce3a5dab7",
+  "source_path": "examples/first_light.json",
+  "source_blob_sha": "3a6f64e8f0355812360abd0546f2b997cdb0db28",
+  "artifact": "project.json",
+  "semantic_claims": {"audio_model": "tone_only"},
+  "notes": [
+    "Exact historical v0.1 first_light.json is preserved byte-for-byte as project.json.",
+    "At the same source ref, canonical.py accepts only tone audio events. v0.1 therefore has no undeclared-speech-engine claim to compare with later speech-capable generations."
+  ]
+}
