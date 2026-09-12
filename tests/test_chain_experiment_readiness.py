@@ -37,14 +37,19 @@ class ChainExperimentReadinessTests(unittest.TestCase):
         self.assertEqual(result["fixture_count"], 6)
         self.assertEqual(result["max_lineage_length"], 4)
         self.assertEqual(result["admitted_path_count"], 1)
-        self.assertEqual(result["investigation_count"], 2)
+        self.assertEqual(result["investigation_count"], 3)
         self.assertFalse(result["investigations_count_as_admissions"])
         self.assertFalse(result["chain_experiment_input_ready"])
 
         rows = {row["id"]: row for row in result["lineages"]}
         self.assertEqual(rows["city-p2p-handshake"]["required_adjacent_path_count"], 1)
-        self.assertEqual(rows["city-p2p-handshake"]["investigated_missing_path_count"], 0)
-        self.assertEqual(rows["city-p2p-handshake"]["uninvestigated_missing_path_count"], 1)
+        self.assertEqual(rows["city-p2p-handshake"]["investigated_missing_path_count"], 1)
+        self.assertEqual(rows["city-p2p-handshake"]["uninvestigated_missing_path_count"], 0)
+        self.assertEqual(
+            [row["investigation_id"] for row in rows["city-p2p-handshake"]["investigated_missing_paths"]],
+            ["city-p2p-g1-to-g2-audit-2026-09-12"],
+        )
+        self.assertEqual(rows["city-p2p-handshake"]["uninvestigated_missing_paths"], [])
         self.assertEqual(rows["framestate-project"]["required_adjacent_path_count"], 3)
         self.assertEqual(rows["framestate-project"]["admitted_adjacent_path_count"], 1)
         self.assertEqual(rows["framestate-project"]["investigated_missing_path_count"], 2)

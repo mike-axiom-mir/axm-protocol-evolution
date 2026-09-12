@@ -25,9 +25,11 @@ The bounded corpus now contains six real AXM generation fixtures from two reposi
 
 The original five-fixture corpus target is exceeded. **That is still not one five-generation migration chain.** The fixtures currently form two declared semantic lineages: City Multiplayer has 2 admitted handshake generations and FrameState has 4 admitted project generations. The longest current lineage is therefore 4.
 
-A second gate is now explicit: even a five-generation lineage is not input-ready for the chain-vs-direct experiment until every ordered adjacent pair has an admitted migration-path evidence reference. `fixtures/migration_paths.json` now admits **one** grounded path: FrameState v0.4 -> v0.5. The earlier FrameState edges v0.1 -> v0.2 and v0.2 -> v0.4 remain missing, while City Multiplayer G1 -> G2 remains missing. No migration path is inferred from version numbers, lineage adjacency, or reader compatibility.
+A second gate is now explicit: even a five-generation lineage is not input-ready for the chain-vs-direct experiment until every ordered adjacent pair has an admitted migration-path evidence reference. `fixtures/migration_paths.json` now admits **one** grounded path: FrameState v0.4 -> v0.5. The earlier FrameState edges v0.1 -> v0.2 and v0.2 -> v0.4 remain missing, and City Multiplayer G1 -> G2 also remains missing. All currently declared missing adjacent edges have now been investigated rather than silently inferred. No migration path is inferred from version numbers, lineage adjacency, reader compatibility, or repository code evolution.
 
 The first two FrameState edges remain **HOLD** because their inspected evidence establishes backward reader compatibility or implementation recovery rather than project-state transformation. FrameState v0.4 -> v0.5 is different: the donor commit that introduced schema v0.5 changed the canonical normalizer from v0.4 output to v0.5 output, accepts v0.4 input, and materializes previously undeclared historical speech as `engine: espeak` while new v0.5 speech defaults to `native`. The donor also added a regression asserting the legacy-v0.4/new-v0.5 split. This is sufficient to admit that exact adjacent transition as grounded migration-path evidence, while still not proving that Protocol Evolution executed the transformer or that whole-project semantic equivalence holds.
+
+City Multiplayer G1 -> G2 is also **HOLD**, for a different reason. The donor history explicitly replaces the earlier HELLO/WELCOME admission rule with protocol version 2 and authenticated ACK-before-admission semantics. Its regression proves ACK is required and explicitly rejects protocol version 1 at the v2 host. That grounds a real semantic protocol boundary, but it is evidence of replacement and incompatibility at the inspected boundary, not evidence of a G1 -> G2 compatibility or migration bridge. No dual-stack negotiation, transformer, adapter, migration receipt, or derived G2 exchange bound to the admitted G1 fixture was identified in the bounded donor-history audit.
 
 The current executable questions are:
 
@@ -42,6 +44,7 @@ The current executable questions are:
 9. Can two same-domain generations with no shared tested semantic claim remain explicitly unjudged instead of being mislabeled incompatible?
 10. Can a lineage with enough generations still be prevented from masquerading as chain-experiment-ready when adjacent migration-path evidence is missing?
 11. Can an adjacent path be admitted from explicit donor transformation evidence without copying or executing the donor migration implementation here?
+12. Can an explicit protocol replacement remain distinct from a migration path when the newer generation rejects the older wire protocol?
 
 The FrameState v0.2 and v0.4 fixtures deliberately test question 5: both preserve undeclared speech as eSpeak, while v0.5 changes that default to the native engine. Therefore a version-number change alone is not evidence of semantic change.
 
@@ -99,5 +102,7 @@ The bounded fixture tests currently establish narrow claims only:
 > Five same-lineage generations would still not prove chain-experiment input readiness; every adjacent migration path must be explicitly admitted with evidence references, and admission still does not prove execution or semantic equivalence.
 
 > An explicit donor normalizer that accepts an older admitted generation and emits the next admitted schema can ground an adjacent path admission when its preservation rule is explicit and tested; that admission remains evidence about the path, not proof that this repository executed it.
+
+> An explicit implementation replacement can prove that protocol semantics changed without proving a migration path exists, especially when the newer implementation rejects the older protocol generation.
 
 See `evidence/` for exact limits and action reports.

@@ -20,7 +20,7 @@
   "failures": [],
   "fixture_count": 6,
   "input_ready_lineages": [],
-  "investigation_count": 2,
+  "investigation_count": 3,
   "investigations": [
     {
       "blocker": "No explicit transformer, migration receipt, or derived v0.2 target artifact for the admitted v0.1 fixture was found in the bounded v0.1-to-v0.2 donor history scan. Reader compatibility alone cannot be admitted as a migration path.",
@@ -50,6 +50,21 @@
       "source_generation": "framestate-project-v0.2",
       "status": "HOLD",
       "target_generation": "framestate-project-v0.4"
+    },
+    {
+      "blocker": "No dual-stack negotiation, packet or state transformer, adapter, migration receipt, or derived G2 exchange bound to the admitted G1 fixture was identified in the bounded 37-commit G1-to-G2 donor compare. The v2 implementation rejects the older protocol version, so repository code evolution alone cannot be admitted as a G1-to-G2 migration path.",
+      "evidence_refs": [
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/d3b1bfb79d4e997781037ce0723c193be5f5df7a",
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/a260196340d706a9d5fda9cedb143f50873bca48",
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/558f0fdeba9d41d8e9a45a0ca1b08e53dca84409",
+        "https://github.com/mike-axiom-mir/axm-city-multiplayer/compare/d3b1bfb79d4e997781037ce0723c193be5f5df7a...241c613b58cf624bb852d84aba1136f2f61e91f3"
+      ],
+      "finding": "The donor history contains an explicit protocol replacement: generation 1 admits the host-side peer immediately after authenticated HELLO/WELCOME, while the later protocol introduces protocol version 2 and requires authenticated ACK before host admission. The matching regression proves ACK is required and explicitly rejects protocol version 1 at the v2 host. This demonstrates a semantic protocol boundary, not a compatibility bridge from the admitted G1 exchange into G2.",
+      "id": "city-p2p-g1-to-g2-audit-2026-09-12",
+      "lineage_id": "city-p2p-handshake",
+      "source_generation": "city-p2p-handshake-g1",
+      "status": "HOLD",
+      "target_generation": "city-p2p-handshake-g2"
     }
   ],
   "investigations_count_as_admissions": false,
@@ -62,8 +77,16 @@
       "domain": "city.multiplayer.handshake",
       "generation_count": 2,
       "id": "city-p2p-handshake",
-      "investigated_missing_path_count": 0,
-      "investigated_missing_paths": [],
+      "investigated_missing_path_count": 1,
+      "investigated_missing_paths": [
+        {
+          "blocker": "No dual-stack negotiation, packet or state transformer, adapter, migration receipt, or derived G2 exchange bound to the admitted G1 fixture was identified in the bounded 37-commit G1-to-G2 donor compare. The v2 implementation rejects the older protocol version, so repository code evolution alone cannot be admitted as a G1-to-G2 migration path.",
+          "investigation_id": "city-p2p-g1-to-g2-audit-2026-09-12",
+          "source_generation": "city-p2p-handshake-g1",
+          "status": "HOLD",
+          "target_generation": "city-p2p-handshake-g2"
+        }
+      ],
       "lineage_length_ready": false,
       "missing_adjacent_paths": [
         {
@@ -73,13 +96,8 @@
       ],
       "required_adjacent_path_count": 1,
       "target_length": 5,
-      "uninvestigated_missing_path_count": 1,
-      "uninvestigated_missing_paths": [
-        {
-          "source_generation": "city-p2p-handshake-g1",
-          "target_generation": "city-p2p-handshake-g2"
-        }
-      ]
+      "uninvestigated_missing_path_count": 0,
+      "uninvestigated_missing_paths": []
     },
     {
       "adjacent_path_catalog_complete": false,
