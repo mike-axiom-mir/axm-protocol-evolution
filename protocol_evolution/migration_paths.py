@@ -179,6 +179,12 @@ def analyze_chain_experiment_readiness(
                 f"{investigated_edges[edge]['id']}:{investigation_id}"
             )
             continue
+        if edge in admitted_edges:
+            failures.append(
+                f"conflicting-admission-and-hold:{lineage_id}:{source}:{target}:"
+                f"{admitted_edges[edge]}:{investigation_id}"
+            )
+            continue
 
         row = {
             "id": investigation_id,
