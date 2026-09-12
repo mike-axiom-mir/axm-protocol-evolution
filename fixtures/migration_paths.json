@@ -1,9 +1,23 @@
 {
   "schema": "axm.protocol-evolution.migration-path-admissions/v0.1",
-  "paths": [],
+  "paths": [
+    {
+      "id": "framestate-v0.4-to-v0.5-canonical-normalization",
+      "lineage_id": "framestate-project",
+      "source_generation": "framestate-project-v0.4",
+      "target_generation": "framestate-project-v0.5",
+      "evidence_refs": [
+        "https://github.com/mike-axiom-mir/axm-framestate/commit/df019c55e6e2c4f46f7bda59ccc5bdc229921737",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/src/axm_framestate/canonical.py",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/tests/test_speech.py",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/CHANGELOG.md"
+      ]
+    }
+  ],
   "notes": [
     "Adjacency in fixtures/lineages.json does not itself prove a migration path exists.",
     "A path may be admitted only with explicit evidence references for that exact ordered adjacent pair.",
-    "No adjacent migration path has been admitted yet; absence stays visible rather than being inferred from reader compatibility or version numbers."
+    "FrameState v0.4 -> v0.5 is the first admitted adjacent path: the donor's v0.5 canonical normalizer accepts v0.4 input, emits v0.5 canonical state, and materializes undeclared historical speech as engine=espeak to preserve the older meaning.",
+    "Path admission records grounded transition evidence only; it does not prove that Protocol Evolution executed the donor transformer, authenticate the evidence, or establish whole-project semantic equivalence."
   ]
 }

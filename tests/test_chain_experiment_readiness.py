@@ -36,7 +36,7 @@ class ChainExperimentReadinessTests(unittest.TestCase):
         self.assertTrue(result["valid"])
         self.assertEqual(result["fixture_count"], 6)
         self.assertEqual(result["max_lineage_length"], 4)
-        self.assertEqual(result["admitted_path_count"], 0)
+        self.assertEqual(result["admitted_path_count"], 1)
         self.assertEqual(result["investigation_count"], 2)
         self.assertFalse(result["investigations_count_as_admissions"])
         self.assertFalse(result["chain_experiment_input_ready"])
@@ -46,14 +46,24 @@ class ChainExperimentReadinessTests(unittest.TestCase):
         self.assertEqual(rows["city-p2p-handshake"]["investigated_missing_path_count"], 0)
         self.assertEqual(rows["city-p2p-handshake"]["uninvestigated_missing_path_count"], 1)
         self.assertEqual(rows["framestate-project"]["required_adjacent_path_count"], 3)
+        self.assertEqual(rows["framestate-project"]["admitted_adjacent_path_count"], 1)
         self.assertEqual(rows["framestate-project"]["investigated_missing_path_count"], 2)
-        self.assertEqual(rows["framestate-project"]["uninvestigated_missing_path_count"], 1)
+        self.assertEqual(rows["framestate-project"]["uninvestigated_missing_path_count"], 0)
+        self.assertEqual(
+            rows["framestate-project"]["admitted_adjacent_paths"],
+            [
+                {
+                    "source_generation": "framestate-project-v0.4",
+                    "target_generation": "framestate-project-v0.5",
+                    "path_id": "framestate-v0.4-to-v0.5-canonical-normalization",
+                }
+            ],
+        )
         self.assertEqual(
             rows["framestate-project"]["missing_adjacent_paths"],
             [
                 {"source_generation": "framestate-project-v0.1", "target_generation": "framestate-project-v0.2"},
                 {"source_generation": "framestate-project-v0.2", "target_generation": "framestate-project-v0.4"},
-                {"source_generation": "framestate-project-v0.4", "target_generation": "framestate-project-v0.5"},
             ],
         )
         self.assertEqual(
@@ -63,11 +73,10 @@ class ChainExperimentReadinessTests(unittest.TestCase):
                 "framestate-v0.2-to-v0.4-audit-2026-09-12",
             ],
         )
+        self.assertEqual(rows["framestate-project"]["uninvestigated_missing_paths"], [])
         self.assertEqual(
-            rows["framestate-project"]["uninvestigated_missing_paths"],
-            [
-                {"source_generation": "framestate-project-v0.4", "target_generation": "framestate-project-v0.5"},
-            ],
+            [row["id"] for row in result["admitted_paths"]],
+            ["framestate-v0.4-to-v0.5-canonical-normalization"],
         )
 
     def test_five_generation_lineage_without_paths_is_not_input_ready(self):
