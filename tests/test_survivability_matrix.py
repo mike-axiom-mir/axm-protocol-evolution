@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 import unittest
 
@@ -30,6 +31,10 @@ class MatrixTests(unittest.TestCase):
         self.assertEqual(relation[("framestate-project-v0.2", "framestate-project-v0.4")], "SAME")
         self.assertEqual(relation[("framestate-project-v0.4", "framestate-project-v0.2")], "SAME")
         self.assertEqual(relation[("framestate-project-v0.2", "framestate-project-v0.5")], "UNSUPPORTED")
+
+    def test_checked_in_matrix_matches_generated_evidence(self):
+        checked_in = json.loads((ROOT / "evidence" / "generation_matrix.json").read_text(encoding="utf-8"))
+        self.assertEqual(checked_in, MODULE.build_matrix())
 
 
 if __name__ == "__main__":
