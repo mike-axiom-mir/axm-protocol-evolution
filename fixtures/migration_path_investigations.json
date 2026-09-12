@@ -14,6 +14,21 @@
       ],
       "finding": "The v0.2 checkpoint explicitly retains v0.1 reader compatibility. Its canonical normalizer accepts both project schemas and returns the input schema unchanged, so the inspected evidence demonstrates backward read compatibility rather than a v0.1-to-v0.2 migration.",
       "blocker": "No explicit transformer, migration receipt, or derived v0.2 target artifact for the admitted v0.1 fixture was found in the bounded v0.1-to-v0.2 donor history scan. Reader compatibility alone cannot be admitted as a migration path."
+    },
+    {
+      "id": "framestate-v0.2-to-v0.4-audit-2026-09-12",
+      "lineage_id": "framestate-project",
+      "source_generation": "framestate-project-v0.2",
+      "target_generation": "framestate-project-v0.4",
+      "status": "HOLD",
+      "evidence_refs": [
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34/CHANGELOG.md",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34/src/axm_framestate/canonical.py",
+        "https://github.com/mike-axiom-mir/axm-framestate/commit/e33e4e8abb0e7a491f1af4d01c523cedda98bc4a",
+        "https://github.com/mike-axiom-mir/axm-framestate/compare/5d46363fb30bf5d30198b8cdec473d3bb9ba6287...60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34"
+      ],
+      "finding": "The v0.4 checkpoint explicitly says the lost uncommitted v0.3 body was rebuilt forward from the surviving v0.1 archive, the safe v0.2 branch, and v0.3 evidence, while advertising v0.1-v0.4 input compatibility. The inspected evidence therefore shows repository recovery plus multi-version reader compatibility, not a demonstrated v0.2-project-to-v0.4-project migration for the admitted fixture.",
+      "blocker": "No explicit project-state transformer, migration receipt, or derived v0.4 target artifact for the admitted v0.2 project was identified in the bounded v0.2-to-v0.4 donor scan. Rebuilding the implementation forward from v0.2 source is repository evolution and cannot be admitted as evidence that a v0.2 project artifact was migrated into v0.4."
     }
   ],
   "notes": [
