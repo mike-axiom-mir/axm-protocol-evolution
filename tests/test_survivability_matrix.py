@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 import unittest
 
+from protocol_evolution import CompatibilityState
+
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("survivability_matrix", ROOT / "tools" / "survivability_matrix.py")
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -31,6 +33,20 @@ class MatrixTests(unittest.TestCase):
         self.assertEqual(relation[("framestate-project-v0.2", "framestate-project-v0.4")], "SAME")
         self.assertEqual(relation[("framestate-project-v0.4", "framestate-project-v0.2")], "SAME")
         self.assertEqual(relation[("framestate-project-v0.2", "framestate-project-v0.5")], "UNSUPPORTED")
+
+    def test_cross_domain_pairs_are_unjudged_not_fake_states(self):
+        matrix = MODULE.build_matrix()
+        rows = {(row["from"], row["to"]): row for row in matrix["rows"]}
+        cross = rows[("city-p2p-handshake-g1", "framestate-project-v0.2")]
+        self.assertFalse(cross["comparable"])
+        self.assertIsNone(cross["state"])
+        self.assertEqual(cross["reason"], "different-domain")
+
+    def test_every_emitted_compatibility_state_is_declared(self):
+        matrix = MODULE.build_matrix()
+        declared = {state.value for state in CompatibilityState}
+        emitted = {row["state"] for row in matrix["rows"] if row["state"] is not None}
+        self.assertLessEqual(emitted, declared)
 
     def test_checked_in_matrix_matches_generated_evidence(self):
         checked_in = json.loads((ROOT / "evidence" / "generation_matrix.json").read_text(encoding="utf-8"))
