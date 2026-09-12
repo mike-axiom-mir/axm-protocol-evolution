@@ -160,3 +160,61 @@ def verify_migration_receipt_binding(receipt: Mapping[str, Any], *, source: Any 
         "authenticity_proven": False,
         "semantic_truth_proven": False,
     }
+
+
+def verify_migration_receipt_chain(receipts: Iterable[Mapping[str, Any]], *, source: Any | None = None, target: Any | None = None) -> dict[str, Any]:
+    """Verify receipt binding plus adjacent digest continuity for a declared chain.
+
+    A valid result proves only that each receipt is structurally/self-digest valid,
+    optional supplied endpoint values match the declared endpoint digests, and every
+    receipt target digest equals the next receipt source digest. It does not prove
+    that any transformer executed, that any semantic claim is true, or that the
+    chain is preferable to a direct migration.
+    """
+    try:
+        chain = list(receipts)
+    except TypeError:
+        chain = []
+        failures = ["chain-not-iterable"]
+    else:
+        failures: list[str] = []
+
+    if not chain:
+        if "chain-not-iterable" not in failures:
+            failures.append("empty-chain")
+        return {
+            "chain_valid": False,
+            "failures": failures,
+            "receipt_count": 0,
+            "chain_scope": "receipt-binding-and-adjacent-digest-continuity",
+            "authenticity_proven": False,
+            "transform_execution_proven": False,
+            "semantic_truth_proven": False,
+            "direct_equivalence_proven": False,
+        }
+
+    for index, receipt in enumerate(chain):
+        binding = verify_migration_receipt_binding(
+            receipt,
+            source=source if index == 0 and source is not None else None,
+            target=target if index == len(chain) - 1 and target is not None else None,
+        )
+        for failure in binding["failures"]:
+            failures.append(f"receipt-{index}:{failure}")
+
+    for index, (left, right) in enumerate(zip(chain, chain[1:])):
+        if not isinstance(left, Mapping) or not isinstance(right, Mapping):
+            continue
+        if left.get("target_digest") != right.get("source_digest"):
+            failures.append(f"link-{index}-{index + 1}-digest-mismatch")
+
+    return {
+        "chain_valid": not failures,
+        "failures": failures,
+        "receipt_count": len(chain),
+        "chain_scope": "receipt-binding-and-adjacent-digest-continuity",
+        "authenticity_proven": False,
+        "transform_execution_proven": False,
+        "semantic_truth_proven": False,
+        "direct_equivalence_proven": False,
+    }
