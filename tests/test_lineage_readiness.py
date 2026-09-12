@@ -11,11 +11,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LineageReadinessTests(unittest.TestCase):
-    def test_five_fixtures_do_not_fake_one_five_generation_chain(self):
+    def test_six_fixtures_do_not_fake_one_five_generation_chain(self):
         result = build_lineage_readiness()
         self.assertTrue(result["valid"])
-        self.assertEqual(result["fixture_count"], 5)
-        self.assertEqual(result["max_lineage_length"], 3)
+        self.assertEqual(result["fixture_count"], 6)
+        self.assertEqual(result["max_lineage_length"], 4)
         self.assertTrue(result["fixture_count_meets_target_but_no_lineage_does"])
         self.assertFalse(result["chain_ready"])
         self.assertEqual(result["ready_lineages"], [])
@@ -24,8 +24,17 @@ class LineageReadinessTests(unittest.TestCase):
         result = build_lineage_readiness()
         rows = {row["id"]: row for row in result["lineages"]}
         self.assertEqual(rows["city-p2p-handshake"]["generation_count"], 2)
-        self.assertEqual(rows["framestate-project"]["generation_count"], 3)
-        self.assertEqual(rows["framestate-project"]["target_gap"], 2)
+        self.assertEqual(rows["framestate-project"]["generation_count"], 4)
+        self.assertEqual(rows["framestate-project"]["target_gap"], 1)
+        self.assertEqual(
+            rows["framestate-project"]["generations"],
+            [
+                "framestate-project-v0.1",
+                "framestate-project-v0.2",
+                "framestate-project-v0.4",
+                "framestate-project-v0.5",
+            ],
+        )
 
     def test_cross_domain_fixture_in_one_lineage_is_rejected(self):
         manifests = load_manifests()
@@ -35,7 +44,7 @@ class LineageReadinessTests(unittest.TestCase):
                 {
                     "id": "invalid-mixed",
                     "domain": "framestate.project",
-                    "generations": ["framestate-project-v0.2", "city-p2p-handshake-g1"],
+                    "generations": ["framestate-project-v0.1", "city-p2p-handshake-g1"],
                 }
             ],
         }
