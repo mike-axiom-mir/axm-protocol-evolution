@@ -1,0 +1,63 @@
+{
+  "admitted_path_count": 0,
+  "admitted_paths": [],
+  "chain_experiment_input_ready": false,
+  "direct_migration_equivalence_proven": false,
+  "evidence_references_independently_verified": false,
+  "failures": [],
+  "fixture_count": 6,
+  "input_ready_lineages": [],
+  "lineages": [
+    {
+      "adjacent_path_catalog_complete": false,
+      "admitted_adjacent_path_count": 0,
+      "admitted_adjacent_paths": [],
+      "chain_experiment_input_ready": false,
+      "domain": "city.multiplayer.handshake",
+      "generation_count": 2,
+      "id": "city-p2p-handshake",
+      "lineage_length_ready": false,
+      "missing_adjacent_paths": [
+        {
+          "source_generation": "city-p2p-handshake-g1",
+          "target_generation": "city-p2p-handshake-g2"
+        }
+      ],
+      "required_adjacent_path_count": 1,
+      "target_length": 5
+    },
+    {
+      "adjacent_path_catalog_complete": false,
+      "admitted_adjacent_path_count": 0,
+      "admitted_adjacent_paths": [],
+      "chain_experiment_input_ready": false,
+      "domain": "framestate.project",
+      "generation_count": 4,
+      "id": "framestate-project",
+      "lineage_length_ready": false,
+      "missing_adjacent_paths": [
+        {
+          "source_generation": "framestate-project-v0.1",
+          "target_generation": "framestate-project-v0.2"
+        },
+        {
+          "source_generation": "framestate-project-v0.2",
+          "target_generation": "framestate-project-v0.4"
+        },
+        {
+          "source_generation": "framestate-project-v0.4",
+          "target_generation": "framestate-project-v0.5"
+        }
+      ],
+      "required_adjacent_path_count": 3,
+      "target_length": 5
+    }
+  ],
+  "max_lineage_length": 4,
+  "migration_execution_proven": false,
+  "schema": "axm.protocol-evolution.chain-experiment-readiness/v0.1",
+  "scope": "declared-adjacent-migration-path-admissions-and-lineage-length-only",
+  "semantic_equivalence_proven": false,
+  "target_length": 5,
+  "valid": true
+}
