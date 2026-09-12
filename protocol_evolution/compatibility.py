@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from copy import deepcopy
 from enum import StrEnum
 import hashlib
 import json
-from typing import Any, Callable, Iterable, Mapping
+import re
+from typing import Any, Callable, Iterable
 
 
 class CompatibilityState(StrEnum):
@@ -61,3 +63,100 @@ def migration_receipt(*, source: Any, target: Any, transformer: str, state: Comp
     }
     body["receipt_digest"] = digest(body)
     return body
+
+
+def verify_migration_receipt_binding(receipt: Mapping[str, Any], *, source: Any | None = None, target: Any | None = None) -> dict[str, Any]:
+    """Verify only the receipt's self-digest and optional supplied payload identity.
+
+    This deliberately does not authenticate an author, transformer, or semantic claim.
+    A party that can rewrite a receipt can also recompute its plain SHA-256 digest.
+    """
+    failures: list[str] = []
+    required = {
+        "schema",
+        "source_digest",
+        "target_digest",
+        "transformer",
+        "compatibility_state",
+        "losses",
+        "ambiguities",
+        "receipt_digest",
+    }
+    allowed = required | {"assertions_checked"}
+
+    if not isinstance(receipt, Mapping):
+        failures.append("receipt-not-object")
+        return {
+            "binding_valid": False,
+            "failures": failures,
+            "binding_scope": "receipt-self-digest-and-supplied-payload-identity",
+            "authenticity_proven": False,
+            "semantic_truth_proven": False,
+        }
+
+    raw = dict(receipt)
+    missing = sorted(required - set(raw))
+    extra = sorted(set(raw) - allowed)
+    if missing:
+        failures.append("missing-fields:" + ",".join(missing))
+    if extra:
+        failures.append("unexpected-fields:" + ",".join(extra))
+
+    if raw.get("schema") != "axm.protocol-evolution.migration-receipt/v0.1":
+        failures.append("unsupported-schema")
+
+    digest_pattern = re.compile(r"^sha256:[0-9a-f]{64}$")
+    for name in ("source_digest", "target_digest", "receipt_digest"):
+        value = raw.get(name)
+        if not isinstance(value, str) or digest_pattern.fullmatch(value) is None:
+            failures.append(f"invalid-{name.replace('_', '-')}")
+
+    transformer = raw.get("transformer")
+    if not isinstance(transformer, str) or not transformer:
+        failures.append("invalid-transformer")
+
+    state = raw.get("compatibility_state")
+    if state not in {member.value for member in CompatibilityState}:
+        failures.append("invalid-compatibility-state")
+
+    for name in ("losses", "ambiguities", "assertions_checked"):
+        if name not in raw and name == "assertions_checked":
+            continue
+        value = raw.get(name)
+        if not isinstance(value, list) or any(not isinstance(item, str) for item in value):
+            failures.append(f"invalid-{name.replace('_', '-')}")
+
+    body = {key: deepcopy(value) for key, value in raw.items() if key != "receipt_digest"}
+    try:
+        expected_receipt_digest = digest(body)
+    except (TypeError, ValueError):
+        failures.append("receipt-not-canonical-json")
+    else:
+        if raw.get("receipt_digest") != expected_receipt_digest:
+            failures.append("receipt-digest-mismatch")
+
+    if source is not None:
+        try:
+            expected_source_digest = digest(source)
+        except (TypeError, ValueError):
+            failures.append("source-not-canonical-json")
+        else:
+            if raw.get("source_digest") != expected_source_digest:
+                failures.append("source-digest-mismatch")
+
+    if target is not None:
+        try:
+            expected_target_digest = digest(target)
+        except (TypeError, ValueError):
+            failures.append("target-not-canonical-json")
+        else:
+            if raw.get("target_digest") != expected_target_digest:
+                failures.append("target-digest-mismatch")
+
+    return {
+        "binding_valid": not failures,
+        "failures": failures,
+        "binding_scope": "receipt-self-digest-and-supplied-payload-identity",
+        "authenticity_proven": False,
+        "semantic_truth_proven": False,
+    }
