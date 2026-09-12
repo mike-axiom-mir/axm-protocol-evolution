@@ -31,11 +31,11 @@ The current executable questions are:
 3. Can two versions negotiate exact capabilities instead of assuming version numbers imply feature equivalence?
 4. Can compatibility evidence be receipted without granting migration or canon authority?
 5. Can two different schema versions preserve the same tested meaning?
-6. Can a migration receipt prove that it still binds to the exact supplied source/target payloads without pretending a plain hash proves authorship or semantic truth?
+6. Can a migration receipt prove that it still binds to the same canonical source/target values without pretending a plain hash proves authorship or semantic truth?
 
 The FrameState v0.2 and v0.4 fixtures deliberately test question 5: both preserve undeclared speech as eSpeak, while v0.5 changes that default to the native engine. Therefore a version-number change alone is not evidence of semantic change.
 
-Receipt binding verification deliberately has a narrower claim: it checks the receipt's own SHA-256 binding, contract shape, and optional supplied source/target identity. It does **not** authenticate who wrote the receipt, prove the transformer ran, or prove that the recorded compatibility state is semantically true.
+Receipt binding verification deliberately has a narrower claim: it checks the receipt's canonical JSON self-digest, contract shape, and optional supplied source/target value identity under the same canonical JSON encoding. It does **not** bind original whitespace/key-order bytes, authenticate who wrote the receipt, prove the transformer ran, or prove that the recorded compatibility state is semantically true.
 
 ## Donor boundary
 
@@ -68,6 +68,6 @@ The bounded fixture tests currently establish narrow claims only:
 
 > A version-number difference does not prove semantic incompatibility.
 
-> A self-digest can bind a receipt to bytes and supplied payload identity, but it does not by itself prove authorship, execution, or semantic truth.
+> A self-digest can bind a receipt to canonical content and supplied payload values, but it does not by itself prove authorship, execution, or semantic truth.
 
 See `evidence/` for exact limits and action reports.
