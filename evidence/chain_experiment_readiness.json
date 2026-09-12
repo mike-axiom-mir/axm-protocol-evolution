@@ -7,6 +7,24 @@
   "failures": [],
   "fixture_count": 6,
   "input_ready_lineages": [],
+  "investigation_count": 1,
+  "investigations": [
+    {
+      "blocker": "No explicit transformer, migration receipt, or derived v0.2 target artifact for the admitted v0.1 fixture was found in the bounded v0.1-to-v0.2 donor history scan. Reader compatibility alone cannot be admitted as a migration path.",
+      "evidence_refs": [
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/5d46363fb30bf5d30198b8cdec473d3bb9ba6287/CHANGELOG.md",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/5d46363fb30bf5d30198b8cdec473d3bb9ba6287/src/axm_framestate/canonical.py",
+        "https://github.com/mike-axiom-mir/axm-framestate/compare/5b5f73cb78667d9af981af3b38cd7a7ce3a5dab7...5d46363fb30bf5d30198b8cdec473d3bb9ba6287"
+      ],
+      "finding": "The v0.2 checkpoint explicitly retains v0.1 reader compatibility. Its canonical normalizer accepts both project schemas and returns the input schema unchanged, so the inspected evidence demonstrates backward read compatibility rather than a v0.1-to-v0.2 migration.",
+      "id": "framestate-v0.1-to-v0.2-audit-2026-09-12",
+      "lineage_id": "framestate-project",
+      "source_generation": "framestate-project-v0.1",
+      "status": "HOLD",
+      "target_generation": "framestate-project-v0.2"
+    }
+  ],
+  "investigations_count_as_admissions": false,
   "lineages": [
     {
       "adjacent_path_catalog_complete": false,
@@ -16,6 +34,8 @@
       "domain": "city.multiplayer.handshake",
       "generation_count": 2,
       "id": "city-p2p-handshake",
+      "investigated_missing_path_count": 0,
+      "investigated_missing_paths": [],
       "lineage_length_ready": false,
       "missing_adjacent_paths": [
         {
@@ -24,7 +44,14 @@
         }
       ],
       "required_adjacent_path_count": 1,
-      "target_length": 5
+      "target_length": 5,
+      "uninvestigated_missing_path_count": 1,
+      "uninvestigated_missing_paths": [
+        {
+          "source_generation": "city-p2p-handshake-g1",
+          "target_generation": "city-p2p-handshake-g2"
+        }
+      ]
     },
     {
       "adjacent_path_catalog_complete": false,
@@ -34,6 +61,16 @@
       "domain": "framestate.project",
       "generation_count": 4,
       "id": "framestate-project",
+      "investigated_missing_path_count": 1,
+      "investigated_missing_paths": [
+        {
+          "blocker": "No explicit transformer, migration receipt, or derived v0.2 target artifact for the admitted v0.1 fixture was found in the bounded v0.1-to-v0.2 donor history scan. Reader compatibility alone cannot be admitted as a migration path.",
+          "investigation_id": "framestate-v0.1-to-v0.2-audit-2026-09-12",
+          "source_generation": "framestate-project-v0.1",
+          "status": "HOLD",
+          "target_generation": "framestate-project-v0.2"
+        }
+      ],
       "lineage_length_ready": false,
       "missing_adjacent_paths": [
         {
@@ -50,13 +87,24 @@
         }
       ],
       "required_adjacent_path_count": 3,
-      "target_length": 5
+      "target_length": 5,
+      "uninvestigated_missing_path_count": 2,
+      "uninvestigated_missing_paths": [
+        {
+          "source_generation": "framestate-project-v0.2",
+          "target_generation": "framestate-project-v0.4"
+        },
+        {
+          "source_generation": "framestate-project-v0.4",
+          "target_generation": "framestate-project-v0.5"
+        }
+      ]
     }
   ],
   "max_lineage_length": 4,
   "migration_execution_proven": false,
-  "schema": "axm.protocol-evolution.chain-experiment-readiness/v0.1",
-  "scope": "declared-adjacent-migration-path-admissions-and-lineage-length-only",
+  "schema": "axm.protocol-evolution.chain-experiment-readiness/v0.2",
+  "scope": "declared-adjacent-path-admissions-plus-non-admitting-investigation-records",
   "semantic_equivalence_proven": false,
   "target_length": 5,
   "valid": true

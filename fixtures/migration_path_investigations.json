@@ -1,0 +1,24 @@
+{
+  "schema": "axm.protocol-evolution.migration-path-investigations/v0.1",
+  "investigations": [
+    {
+      "id": "framestate-v0.1-to-v0.2-audit-2026-09-12",
+      "lineage_id": "framestate-project",
+      "source_generation": "framestate-project-v0.1",
+      "target_generation": "framestate-project-v0.2",
+      "status": "HOLD",
+      "evidence_refs": [
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/5d46363fb30bf5d30198b8cdec473d3bb9ba6287/CHANGELOG.md",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/5d46363fb30bf5d30198b8cdec473d3bb9ba6287/src/axm_framestate/canonical.py",
+        "https://github.com/mike-axiom-mir/axm-framestate/compare/5b5f73cb78667d9af981af3b38cd7a7ce3a5dab7...5d46363fb30bf5d30198b8cdec473d3bb9ba6287"
+      ],
+      "finding": "The v0.2 checkpoint explicitly retains v0.1 reader compatibility. Its canonical normalizer accepts both project schemas and returns the input schema unchanged, so the inspected evidence demonstrates backward read compatibility rather than a v0.1-to-v0.2 migration.",
+      "blocker": "No explicit transformer, migration receipt, or derived v0.2 target artifact for the admitted v0.1 fixture was found in the bounded v0.1-to-v0.2 donor history scan. Reader compatibility alone cannot be admitted as a migration path."
+    }
+  ],
+  "notes": [
+    "Investigation records preserve negative or incomplete evidence so the same gap is not repeatedly rediscovered.",
+    "HOLD records never count as migration-path admissions.",
+    "Absence from this bounded scan is not proof that no migration could ever be constructed; it only blocks admission from the inspected evidence."
+  ]
+}

@@ -15,8 +15,15 @@ from tools.lineage_readiness import load_manifests
 def build_chain_experiment_readiness():
     lineage_catalog = json.loads((ROOT / "fixtures" / "lineages.json").read_text(encoding="utf-8"))
     path_catalog = json.loads((ROOT / "fixtures" / "migration_paths.json").read_text(encoding="utf-8"))
+    investigation_catalog = json.loads(
+        (ROOT / "fixtures" / "migration_path_investigations.json").read_text(encoding="utf-8")
+    )
     return analyze_chain_experiment_readiness(
-        load_manifests(), lineage_catalog, path_catalog, target_length=5
+        load_manifests(),
+        lineage_catalog,
+        path_catalog,
+        investigation_catalog,
+        target_length=5,
     )
 
 
