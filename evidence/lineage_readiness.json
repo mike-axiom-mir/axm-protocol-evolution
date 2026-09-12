@@ -1,0 +1,44 @@
+{
+  "chain_ready": false,
+  "contiguous_release_history_proven": false,
+  "failures": [],
+  "five_fixture_corpus_is_not_five_generation_chain": true,
+  "fixture_count": 5,
+  "lineage_count": 2,
+  "lineages": [
+    {
+      "chain_ready": false,
+      "domain": "city.multiplayer.handshake",
+      "generation_count": 2,
+      "generations": [
+        "city-p2p-handshake-g1",
+        "city-p2p-handshake-g2"
+      ],
+      "id": "city-p2p-handshake",
+      "target_gap": 3,
+      "target_length": 5
+    },
+    {
+      "chain_ready": false,
+      "domain": "framestate.project",
+      "generation_count": 3,
+      "generations": [
+        "framestate-project-v0.2",
+        "framestate-project-v0.4",
+        "framestate-project-v0.5"
+      ],
+      "id": "framestate-project",
+      "target_gap": 2,
+      "target_length": 5
+    }
+  ],
+  "max_lineage_length": 3,
+  "migration_paths_proven": false,
+  "ready_lineages": [],
+  "schema": "axm.protocol-evolution.lineage-readiness/v0.1",
+  "scope": "declared-fixture-lineage-membership-and-count-only",
+  "semantic_equivalence_proven": false,
+  "target_length": 5,
+  "unassigned_generations": [],
+  "valid": true
+}
