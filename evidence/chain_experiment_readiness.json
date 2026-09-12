@@ -1,6 +1,19 @@
 {
-  "admitted_path_count": 0,
-  "admitted_paths": [],
+  "admitted_path_count": 1,
+  "admitted_paths": [
+    {
+      "evidence_refs": [
+        "https://github.com/mike-axiom-mir/axm-framestate/commit/df019c55e6e2c4f46f7bda59ccc5bdc229921737",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/src/axm_framestate/canonical.py",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/tests/test_speech.py",
+        "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/CHANGELOG.md"
+      ],
+      "id": "framestate-v0.4-to-v0.5-canonical-normalization",
+      "lineage_id": "framestate-project",
+      "source_generation": "framestate-project-v0.4",
+      "target_generation": "framestate-project-v0.5"
+    }
+  ],
   "chain_experiment_input_ready": false,
   "direct_migration_equivalence_proven": false,
   "evidence_references_independently_verified": false,
@@ -70,8 +83,14 @@
     },
     {
       "adjacent_path_catalog_complete": false,
-      "admitted_adjacent_path_count": 0,
-      "admitted_adjacent_paths": [],
+      "admitted_adjacent_path_count": 1,
+      "admitted_adjacent_paths": [
+        {
+          "path_id": "framestate-v0.4-to-v0.5-canonical-normalization",
+          "source_generation": "framestate-project-v0.4",
+          "target_generation": "framestate-project-v0.5"
+        }
+      ],
       "chain_experiment_input_ready": false,
       "domain": "framestate.project",
       "generation_count": 4,
@@ -102,21 +121,12 @@
         {
           "source_generation": "framestate-project-v0.2",
           "target_generation": "framestate-project-v0.4"
-        },
-        {
-          "source_generation": "framestate-project-v0.4",
-          "target_generation": "framestate-project-v0.5"
         }
       ],
       "required_adjacent_path_count": 3,
       "target_length": 5,
-      "uninvestigated_missing_path_count": 1,
-      "uninvestigated_missing_paths": [
-        {
-          "source_generation": "framestate-project-v0.4",
-          "target_generation": "framestate-project-v0.5"
-        }
-      ]
+      "uninvestigated_missing_path_count": 0,
+      "uninvestigated_missing_paths": []
     }
   ],
   "max_lineage_length": 4,
