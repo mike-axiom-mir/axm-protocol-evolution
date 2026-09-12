@@ -2,7 +2,7 @@
   "chain_ready": false,
   "contiguous_release_history_proven": false,
   "failures": [],
-  "fixture_count": 5,
+  "fixture_count": 6,
   "fixture_count_meets_target_but_no_lineage_does": true,
   "lineage_count": 2,
   "lineages": [
@@ -21,18 +21,19 @@
     {
       "chain_ready": false,
       "domain": "framestate.project",
-      "generation_count": 3,
+      "generation_count": 4,
       "generations": [
+        "framestate-project-v0.1",
         "framestate-project-v0.2",
         "framestate-project-v0.4",
         "framestate-project-v0.5"
       ],
       "id": "framestate-project",
-      "target_gap": 2,
+      "target_gap": 1,
       "target_length": 5
     }
   ],
-  "max_lineage_length": 3,
+  "max_lineage_length": 4,
   "migration_paths_proven": false,
   "ready_lineages": [],
   "schema": "axm.protocol-evolution.lineage-readiness/v0.1",
