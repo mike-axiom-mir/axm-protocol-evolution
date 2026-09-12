@@ -27,6 +27,8 @@ The original five-fixture corpus target is exceeded. **That is still not one fiv
 
 A second gate is now explicit: even a five-generation lineage is not input-ready for the chain-vs-direct experiment until every ordered adjacent pair has an admitted migration-path evidence reference. `fixtures/migration_paths.json` currently admits **zero** paths. FrameState therefore has three explicit missing adjacent edges (v0.1 -> v0.2, v0.2 -> v0.4, v0.4 -> v0.5), while City Multiplayer has one (G1 -> G2). No migration path is inferred from version numbers, lineage adjacency, or reader compatibility.
 
+Two FrameState edges have now been investigated without being promoted: v0.1 -> v0.2 remains **HOLD** because the evidence establishes backward reader compatibility rather than transformation, and v0.2 -> v0.4 remains **HOLD** because the historical record establishes implementation recovery/rebuild plus multi-version input compatibility rather than a demonstrated project-state migration. v0.4 -> v0.5 is the only FrameState adjacent edge still uninvestigated. A HOLD investigation never counts as a path admission.
+
 The current executable questions are:
 
 1. Can a parser-compatible migration still change meaning?
