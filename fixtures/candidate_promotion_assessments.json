@@ -1,0 +1,108 @@
+{
+  "schema": "axm.protocol-evolution.candidate-promotion-assessments/v0.1",
+  "assessments": [
+    {
+      "id": "living-city-world-v0.1.0-to-v0.2.0-first-promotion-audit",
+      "status": "HOLD",
+      "candidate_ref": {
+        "observation_id": "connected-monolith-v0.3.2-living-city-world-first-five",
+        "candidate_id": "living-city-world-v0.1.0-through-v0.5.0",
+        "source_version": "0.1.0",
+        "target_version": "0.2.0"
+      },
+      "evidence": [
+        {
+          "role": "transition-contract",
+          "repository": "mike-axiom-mir/axm-living-city-simulator",
+          "commit": "a299db639e87b2fa0dea1ded1bf651ab86e9cd3c",
+          "path": "docs/MIGRATION_v0_1_TO_v0_2.md",
+          "archive_sha256": "sha256:bb4e4429ea4f500da362d287de1b4be03c2cf1cbc32222cec8c4eb5e894ee458",
+          "github_blob_sha": "8c139d4b42197f6d04bb48e2c8287e1a1d4a8a45",
+          "archive_git_blob_sha": "8c139d4b42197f6d04bb48e2c8287e1a1d4a8a45"
+        },
+        {
+          "role": "synthetic-regression-test",
+          "repository": "mike-axiom-mir/axm-living-city-simulator",
+          "commit": "a299db639e87b2fa0dea1ded1bf651ab86e9cd3c",
+          "path": "tests/household_agreement_test.js",
+          "archive_sha256": "sha256:c6ff214b99c48eec250c9814ec511ad87610af6fd663324d27d107d88779620d",
+          "github_blob_sha": "3b138ac9b6dc73cc63c8e7b0398a0555938721e5",
+          "archive_git_blob_sha": "3b138ac9b6dc73cc63c8e7b0398a0555938721e5"
+        },
+        {
+          "role": "migration-implementation",
+          "repository": "mike-axiom-mir/axm-living-city-simulator",
+          "commit": "a299db639e87b2fa0dea1ded1bf651ab86e9cd3c",
+          "path": "src/systems.js",
+          "archive_sha256": "sha256:daab013c04590a4edfa03765cc5b3b1b4292de167533d62004c2801251529459",
+          "github_blob_sha": "c8afeac5eb72d6564b2c34f8683d509f35249c09",
+          "archive_git_blob_sha": "c8afeac5eb72d6564b2c34f8683d509f35249c09"
+        },
+        {
+          "role": "current-schema-declaration",
+          "repository": "mike-axiom-mir/axm-living-city-simulator",
+          "commit": "a299db639e87b2fa0dea1ded1bf651ab86e9cd3c",
+          "path": "src/core.js",
+          "archive_sha256": "sha256:7f6ee60f96c1f11e3e18efb7acb437d6894cdee564e0cf67ecce18851b89a3cf",
+          "github_blob_sha": "9da9fd19df391593472ff1ae3784443014a42afe",
+          "archive_git_blob_sha": "9da9fd19df391593472ff1ae3784443014a42afe"
+        },
+        {
+          "role": "donor-recorded-test-output",
+          "repository": "mike-axiom-mir/axm-living-city-simulator",
+          "commit": "a299db639e87b2fa0dea1ded1bf651ab86e9cd3c",
+          "path": "tests/FINAL_HOUSEHOLD_TEST_OUTPUT_v0_11.txt",
+          "archive_sha256": "sha256:4e67b501fb68163985e3bda582a388fb5f1495e40b4257e9dfb6de4679eaadc3",
+          "github_blob_sha": "4deeb0ca087879e0b6273f2511c1d4d9e7a377e4",
+          "archive_git_blob_sha": "4deeb0ca087879e0b6273f2511c1d4d9e7a377e4"
+        },
+        {
+          "role": "declared-history-archive",
+          "repository": "mike-axiom-mir/axm-living-city-simulator",
+          "commit": "a299db639e87b2fa0dea1ded1bf651ab86e9cd3c",
+          "path": ".axm-intake/SOURCE_ARCHIVES.json",
+          "archive_sha256": "sha256:7c4bd962383f064645617cf2bbcfd6f5d9fbdfe9aeb8afa61354673d31865912",
+          "github_blob_sha": "73b827913a193eb7cfe6b70eb453c93c89739537",
+          "archive_git_blob_sha": "73b827913a193eb7cfe6b70eb453c93c89739537"
+        }
+      ],
+      "source_fixture": {
+        "kind": "retro_synthesized_legacy_shape",
+        "historical_value_observed": false,
+        "observation": "The donor regression creates a current world, deep-clones it, rewrites schema/version to v0.1.0, then deletes later fields before migration."
+      },
+      "execution_observation": {
+        "observed_at": "2026-09-13",
+        "command": "node tests/household_agreement_test.js",
+        "exit_code": 0,
+        "suite_passed": 13,
+        "suite_total": 13,
+        "named_regression_passed": true,
+        "observed_target_schema": "axm.living-city-sim.world/v0.11.0",
+        "exact_adjacent_target_observed": false,
+        "truth_boundary": "Executed from the user-supplied connected-monolith module whose relevant file Git blob identities match the pinned donor commit. This proves the current pinned regression on a synthetic v0.1-shaped input, not a historical v0.1 value or an exact v0.1-to-v0.2 output."
+      },
+      "history_archive": {
+        "declared_file": "AXM_LIVING_CITY_SIM_FULL_HISTORY_ARCHIVE_v0_11_0(1).zip",
+        "declared_role": "SEALED_V0_1_0_THROUGH_V0_11_0_HISTORY",
+        "declared_sha256": "sha256:a62dce40aa8c456e9f8b22bfb832df965b829a91d44e36ab554da4b9ee3de7f7",
+        "available_for_inspection": false,
+        "copied_into_donor_repository": false,
+        "present_in_connected_monolith": false
+      },
+      "generation_admission_ready": false,
+      "migration_path_admission_ready": false,
+      "promotion_claims": {
+        "source_generation_admitted": false,
+        "target_generation_admitted": false,
+        "migration_path_admitted": false
+      },
+      "blockers": [
+        "no-inspected-historical-v0.1-world-value",
+        "regression-input-is-current-world-retro-synthesized-to-v0.1-shape",
+        "observed-migrator-emits-v0.11.0-not-exact-v0.2.0",
+        "declared-full-history-archive-not-present-in-connected-monolith-or-donor-repository"
+      ]
+    }
+  ]
+}
