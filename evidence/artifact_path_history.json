@@ -1,0 +1,36 @@
+{
+  "schema": "axm.protocol-evolution.artifact-path-history-evidence/v0.1",
+  "valid": true,
+  "errors": [],
+  "record_count": 2,
+  "historical_support_count": 1,
+  "records": [
+    {
+      "id": "framestate-v0.1-first-light-path-history-control",
+      "route_id": "framestate-v0.1-independent-historical-artifact-control",
+      "artifact_kind": "exact-historical-artifact",
+      "oldest_observed_commit": "5b5f73cb78667d9af981af3b38cd7a7ce3a5dab7",
+      "bounded_result_count": 1,
+      "classification": "declared-historical-commit-is-oldest-observed-path-commit",
+      "historical_observation_supported_by_path_history": true
+    },
+    {
+      "id": "living-city-world-v0.1-schema-path-history-gap",
+      "route_id": "living-city-world-v0.1.0-independent-historical-artifact-gap",
+      "artifact_kind": "legacy-labelled-candidate-artifact",
+      "oldest_observed_commit": "4a24997221412d28b959ef02bb9b30f4a41271cb",
+      "bounded_result_count": 1,
+      "classification": "legacy-labelled-artifact-first-visible-only-in-bounded-cumulative-history",
+      "historical_observation_supported_by_path_history": false
+    }
+  ],
+  "truth_boundary": {
+    "oldest_observed_path_commit_is_not_claimed_creation_time": true,
+    "legacy_version_label_is_not_historical_fixture_proof": true,
+    "schema_or_document_history_is_not_serialized_state_history": true,
+    "path_history_observation_is_not_generation_admission": true,
+    "path_history_observation_is_not_migration_path_evidence": true,
+    "path_history_observation_is_not_semantic_equivalence": true,
+    "adapter_translation_garden_ownership_unchanged": true
+  }
+}

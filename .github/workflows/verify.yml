@@ -60,3 +60,7 @@ jobs:
         run: python tools/historical_fixture_routes.py > /tmp/historical_fixture_routes.json
       - name: Assert historical fixture route evidence is valid JSON
         run: python -m json.tool /tmp/historical_fixture_routes.json > /dev/null
+      - name: Generate artifact path-history evidence
+        run: python tools/artifact_path_history.py > /tmp/artifact_path_history.json
+      - name: Assert artifact path-history evidence is valid JSON
+        run: python -m json.tool /tmp/artifact_path_history.json > /dev/null
