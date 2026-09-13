@@ -1,0 +1,14 @@
+{
+  "schema": "axm.protocol-evolution.historical-fixture-generation-bindings/v0.1",
+  "bindings": [
+    {
+      "id": "framestate-v0.1-route-to-generation",
+      "route_id": "framestate-v0.1-independent-historical-artifact-control",
+      "generation_id": "framestate-project-v0.1"
+    }
+  ],
+  "notes": [
+    "Bindings cover exact-historical-artifact routes only; candidate-gap routes must remain unbound to admitted generations.",
+    "A binding asserts identity agreement between existing evidence declarations. It does not admit a generation or migration path."
+  ]
+}
