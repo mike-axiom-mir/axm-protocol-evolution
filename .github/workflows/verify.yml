@@ -48,3 +48,7 @@ jobs:
         run: python tools/evidence_reference_roles.py > /tmp/evidence_reference_roles.json
       - name: Assert admitted evidence role binding is valid JSON
         run: python -m json.tool /tmp/evidence_reference_roles.json > /dev/null
+      - name: Generate monolith candidate census
+        run: python tools/monolith_candidate_census.py > /tmp/monolith_candidate_census.json
+      - name: Assert monolith candidate census is valid JSON
+        run: python -m json.tool /tmp/monolith_candidate_census.json > /dev/null
