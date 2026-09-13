@@ -179,6 +179,7 @@ def analyze_candidate_promotion_assessments(
         route_evidence = route_results.get(route_id) if isinstance(route_id, str) else None
         if route and route_evidence is None:
             _err(errors, "historical-route-evidence-missing", aid, route_id)
+        if route_evidence is None:
             route_evidence = {}
         if route_evidence and route_evidence.get("kind") != route_kind:
             _err(errors, "historical-route-kind-mismatch", aid, route_kind, route_evidence.get("kind"))
