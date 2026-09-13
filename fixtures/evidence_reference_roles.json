@@ -1,0 +1,36 @@
+{
+  "schema": "axm.protocol-evolution.evidence-reference-roles/v0.1",
+  "records": [
+    {
+      "record_type": "path",
+      "record_id": "framestate-v0.4-to-v0.5-canonical-normalization",
+      "references": [
+        {
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/commit/df019c55e6e2c4f46f7bda59ccc5bdc229921737",
+          "role": "transition-introduction",
+          "observation": "This commit introduces the v0.5 native-speech change set and states that v0.4-and-earlier undeclared speech migrates as espeak while new v0.5 undeclared speech defaults to native."
+        },
+        {
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/src/axm_framestate/canonical.py",
+          "role": "transition-mechanism",
+          "observation": "normalize_project accepts project schemas v0.1 through v0.5, emits canonical schema v0.5, and chooses espeak for undeclared speech in older schemas while choosing native for v0.5."
+        },
+        {
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/tests/test_speech.py",
+          "role": "behavior-preservation-check",
+          "observation": "The regression test_project_schema_migrates_legacy_speech_without_rewriting_its_engine checks that v0.4 undeclared speech normalizes to espeak and v0.5 undeclared speech normalizes to native."
+        },
+        {
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/blob/df019c55e6e2c4f46f7bda59ccc5bdc229921737/CHANGELOG.md",
+          "role": "donor-interpretation-note",
+          "observation": "The v0.8 changelog records the intended semantic split: new v0.5 speech defaults to native while v0.4-and-earlier undeclared speech migrates as espeak to preserve historical intent."
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This overlay does not rewrite migration_paths.json or any historical generation fixture.",
+    "A declared evidence role improves auditability but is not proof that the cited content is sufficient, trustworthy, authored by a particular party, or semantically correct.",
+    "This first bounded role catalog covers admitted migration paths only; HOLD investigation evidence remains intentionally outside this cycle."
+  ]
+}
