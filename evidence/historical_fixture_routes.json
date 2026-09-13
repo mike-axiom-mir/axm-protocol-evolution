@@ -1,0 +1,31 @@
+{
+  "errors": [],
+  "independent_ready_count": 1,
+  "record_count": 2,
+  "records": [
+    {
+      "history_archive_available_for_inspection": false,
+      "id": "framestate-v0.1-independent-historical-artifact-control",
+      "independent_exact_historical_artifact_valid": true,
+      "independent_fixture_provenance_ready": true,
+      "kind": "exact-historical-artifact"
+    },
+    {
+      "history_archive_available_for_inspection": false,
+      "id": "living-city-world-v0.1.0-independent-historical-artifact-gap",
+      "independent_exact_historical_artifact_valid": false,
+      "independent_fixture_provenance_ready": false,
+      "kind": "candidate-gap"
+    }
+  ],
+  "schema": "axm.protocol-evolution.historical-fixture-routes-evidence/v0.1",
+  "truth_boundary": {
+    "adapter_translation_garden_ownership_unchanged": true,
+    "candidate_gap_remains_unpromoted": true,
+    "exact_fixture_provenance_is_not_generation_admission": true,
+    "exact_fixture_provenance_is_not_migration_path_evidence": true,
+    "exact_fixture_provenance_is_not_semantic_equivalence": true,
+    "full_history_archive_is_not_mandatory_for_exact_fixture_provenance": true
+  },
+  "valid": true
+}

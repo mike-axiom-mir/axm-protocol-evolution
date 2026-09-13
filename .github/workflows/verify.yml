@@ -56,3 +56,7 @@ jobs:
         run: python tools/candidate_promotion_readiness.py > /tmp/candidate_promotion_readiness.json
       - name: Assert candidate promotion readiness is valid JSON
         run: python -m json.tool /tmp/candidate_promotion_readiness.json > /dev/null
+      - name: Generate historical fixture route evidence
+        run: python tools/historical_fixture_routes.py > /tmp/historical_fixture_routes.json
+      - name: Assert historical fixture route evidence is valid JSON
+        run: python -m json.tool /tmp/historical_fixture_routes.json > /dev/null
