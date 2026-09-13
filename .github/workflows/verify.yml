@@ -32,3 +32,11 @@ jobs:
         run: python tools/chain_experiment_readiness.py > /tmp/chain_experiment_readiness.json
       - name: Assert chain experiment readiness is valid JSON
         run: python -m json.tool /tmp/chain_experiment_readiness.json > /dev/null
+      - name: Generate evidence reference integrity
+        run: python tools/evidence_reference_integrity.py > /tmp/evidence_reference_integrity.json
+      - name: Assert evidence reference integrity is valid JSON
+        run: python -m json.tool /tmp/evidence_reference_integrity.json > /dev/null
+      - name: Generate evidence reference resolution
+        run: python tools/evidence_reference_resolution.py > /tmp/evidence_reference_resolution.json
+      - name: Assert evidence reference resolution is valid JSON
+        run: python -m json.tool /tmp/evidence_reference_resolution.json > /dev/null
