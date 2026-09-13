@@ -64,3 +64,7 @@ jobs:
         run: python tools/artifact_path_history.py > /tmp/artifact_path_history.json
       - name: Assert artifact path-history evidence is valid JSON
         run: python -m json.tool /tmp/artifact_path_history.json > /dev/null
+      - name: Generate historical fixture route-generation binding evidence
+        run: python tools/historical_fixture_generation_binding.py > /tmp/historical_fixture_generation_binding.json
+      - name: Assert historical fixture route-generation binding evidence is valid JSON
+        run: python -m json.tool /tmp/historical_fixture_generation_binding.json > /dev/null
