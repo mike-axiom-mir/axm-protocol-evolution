@@ -40,3 +40,7 @@ jobs:
         run: python tools/evidence_reference_resolution.py > /tmp/evidence_reference_resolution.json
       - name: Assert evidence reference resolution is valid JSON
         run: python -m json.tool /tmp/evidence_reference_resolution.json > /dev/null
+      - name: Generate evidence donor binding
+        run: python tools/evidence_donor_binding.py > /tmp/evidence_donor_binding.json
+      - name: Assert evidence donor binding is valid JSON
+        run: python -m json.tool /tmp/evidence_donor_binding.json > /dev/null

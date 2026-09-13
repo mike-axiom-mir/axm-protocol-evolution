@@ -1,0 +1,83 @@
+{
+  "all_catalog_references_bound_to_declared_generation_repositories": true,
+  "authorship_verified": false,
+  "declared_generation_repositories": [
+    "mike-axiom-mir/axm-city-multiplayer",
+    "mike-axiom-mir/axm-framestate"
+  ],
+  "declared_generation_repository_count": 2,
+  "donor_bound_reference_count": 15,
+  "failures": [],
+  "generation_manifest_count": 6,
+  "migration_execution_proven": false,
+  "record_count": 4,
+  "records": [
+    {
+      "declared_generation_repositories": [
+        "mike-axiom-mir/axm-framestate"
+      ],
+      "donor_bound_reference_count": 4,
+      "evidence_repositories": [
+        "mike-axiom-mir/axm-framestate"
+      ],
+      "id": "framestate-v0.4-to-v0.5-canonical-normalization",
+      "record_type": "path",
+      "reference_count": 4,
+      "source_generation": "framestate-project-v0.4",
+      "target_generation": "framestate-project-v0.5",
+      "valid": true
+    },
+    {
+      "declared_generation_repositories": [
+        "mike-axiom-mir/axm-framestate"
+      ],
+      "donor_bound_reference_count": 3,
+      "evidence_repositories": [
+        "mike-axiom-mir/axm-framestate"
+      ],
+      "id": "framestate-v0.1-to-v0.2-audit-2026-09-12",
+      "record_type": "investigation",
+      "reference_count": 3,
+      "source_generation": "framestate-project-v0.1",
+      "target_generation": "framestate-project-v0.2",
+      "valid": true
+    },
+    {
+      "declared_generation_repositories": [
+        "mike-axiom-mir/axm-framestate"
+      ],
+      "donor_bound_reference_count": 4,
+      "evidence_repositories": [
+        "mike-axiom-mir/axm-framestate"
+      ],
+      "id": "framestate-v0.2-to-v0.4-audit-2026-09-12",
+      "record_type": "investigation",
+      "reference_count": 4,
+      "source_generation": "framestate-project-v0.2",
+      "target_generation": "framestate-project-v0.4",
+      "valid": true
+    },
+    {
+      "declared_generation_repositories": [
+        "mike-axiom-mir/axm-city-multiplayer"
+      ],
+      "donor_bound_reference_count": 4,
+      "evidence_repositories": [
+        "mike-axiom-mir/axm-city-multiplayer"
+      ],
+      "id": "city-p2p-g1-to-g2-audit-2026-09-12",
+      "record_type": "investigation",
+      "reference_count": 4,
+      "source_generation": "city-p2p-handshake-g1",
+      "target_generation": "city-p2p-handshake-g2",
+      "valid": true
+    }
+  ],
+  "reference_count": 15,
+  "reference_target_content_semantically_verified": false,
+  "repository_binding_only": true,
+  "resolution_evidence_valid": true,
+  "schema": "axm.protocol-evolution.evidence-donor-binding/v0.1",
+  "scope": "checked-in-migration-path-and-hold-evidence-repository-binding",
+  "valid": true
+}
