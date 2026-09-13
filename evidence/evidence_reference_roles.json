@@ -1,17 +1,26 @@
 {
   "admitted_reference_count": 4,
-  "all_admitted_path_refs_have_exactly_one_declared_role": true,
+  "all_edge_refs_have_exactly_one_declared_role": true,
+  "all_hold_refs_have_exactly_one_declared_role": true,
   "authorship_verified": false,
   "chain_vs_direct_equivalence_proven": false,
   "declared_role_counts": {
     "behavior-preservation-check": 1,
-    "donor-interpretation-note": 1,
-    "transition-introduction": 1,
+    "donor-interpretation-note": 2,
+    "historical-range": 3,
+    "incompatibility-check": 1,
+    "protocol-baseline": 1,
+    "reader-compatibility-behavior": 2,
+    "recovery-history": 2,
+    "transition-introduction": 2,
     "transition-mechanism": 1
   },
   "donor_binding_valid": true,
   "evidence_sufficiency_verified": false,
   "failures": [],
+  "hold_reference_count": 11,
+  "hold_status_promoted_to_admission": false,
+  "investigation_record_count": 3,
   "migration_execution_proven": false,
   "path_record_count": 1,
   "records": [
@@ -42,13 +51,95 @@
         }
       ],
       "role_bound_reference_count": 4
+    },
+    {
+      "record_id": "framestate-v0.1-to-v0.2-audit-2026-09-12",
+      "record_type": "investigation",
+      "reference_count": 3,
+      "references": [
+        {
+          "observation": "The v0.2 checkpoint changelog describes a v0.2 canonical schema alongside v0.1 compatibility; it does not describe a v0.1 project-state migration into v0.2.",
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/blob/5d46363fb30bf5d30198b8cdec473d3bb9ba6287/CHANGELOG.md",
+          "role": "donor-interpretation-note"
+        },
+        {
+          "observation": "The v0.2 canonical reader accepts both v0.1 and v0.2 project schemas and returns the incoming schema value in normalized state, grounding backward-reader compatibility rather than an automatic schema upgrade.",
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/blob/5d46363fb30bf5d30198b8cdec473d3bb9ba6287/src/axm_framestate/canonical.py",
+          "role": "reader-compatibility-behavior"
+        },
+        {
+          "observation": "This full-SHA compare pins the bounded donor-history interval inspected between the admitted v0.1 and v0.2 checkpoints; the range defines search scope and is not itself proof that no migrator exists.",
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/compare/5b5f73cb78667d9af981af3b38cd7a7ce3a5dab7...5d46363fb30bf5d30198b8cdec473d3bb9ba6287",
+          "role": "historical-range"
+        }
+      ],
+      "role_bound_reference_count": 3
+    },
+    {
+      "record_id": "framestate-v0.2-to-v0.4-audit-2026-09-12",
+      "record_type": "investigation",
+      "reference_count": 4,
+      "references": [
+        {
+          "observation": "The checkpoint changelog states that lost uncommitted v0.3 source was rebuilt forward from surviving v0.1 source, the safe v0.2 branch, and v0.3 evidence rather than claimed as byte-for-byte recovery; it also records multi-version input compatibility.",
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/blob/60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34/CHANGELOG.md",
+          "role": "recovery-history"
+        },
+        {
+          "observation": "This pinned canonical reader is evidence that older project schemas remain accepted by the later reader; reader acceptance alone does not demonstrate that the admitted v0.2 project artifact was transformed into a v0.4 artifact.",
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/blob/60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34/src/axm_framestate/canonical.py",
+          "role": "reader-compatibility-behavior"
+        },
+        {
+          "observation": "The recovery commit is explicitly titled as recovering and extending FrameState into a usable v0.4 video machine, and its changelog diff says the lost v0.3 body was rebuilt forward rather than resurrected byte-for-byte.",
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/commit/e33e4e8abb0e7a491f1af4d01c523cedda98bc4a",
+          "role": "recovery-history"
+        },
+        {
+          "observation": "This full-SHA compare pins the bounded v0.2-to-v0.4 donor-history interval inspected for a project-state transformer, migration receipt, or derived target artifact; the range itself is only search-scope evidence.",
+          "ref": "https://github.com/mike-axiom-mir/axm-framestate/compare/5d46363fb30bf5d30198b8cdec473d3bb9ba6287...60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34",
+          "role": "historical-range"
+        }
+      ],
+      "role_bound_reference_count": 4
+    },
+    {
+      "record_id": "city-p2p-g1-to-g2-audit-2026-09-12",
+      "record_type": "investigation",
+      "reference_count": 4,
+      "references": [
+        {
+          "observation": "The G1 handshake commit admits the host-side peer immediately after an authenticated HELLO/WELCOME exchange, providing the baseline admission semantics for the older generation.",
+          "ref": "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/d3b1bfb79d4e997781037ce0723c193be5f5df7a",
+          "role": "protocol-baseline"
+        },
+        {
+          "observation": "The later handshake commit introduces protocol version 2 and requires an authenticated guest ACK before host admission, changing the admission state machine rather than adding a dual-stack bridge.",
+          "ref": "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/a260196340d706a9d5fda9cedb143f50873bca48",
+          "role": "transition-introduction"
+        },
+        {
+          "observation": "The regression commit checks that ACK is required before admission and that a protocol-version-1 HELLO is not admitted by the v2 host, grounding an explicit incompatibility boundary.",
+          "ref": "https://github.com/mike-axiom-mir/axm-city-multiplayer/commit/558f0fdeba9d41d8e9a45a0ca1b08e53dca84409",
+          "role": "incompatibility-check"
+        },
+        {
+          "observation": "This full-SHA compare pins the bounded G1-to-G2 donor-history interval inspected for dual-stack negotiation, translation, or a migration receipt; the range does not prove universal absence outside that interval.",
+          "ref": "https://github.com/mike-axiom-mir/axm-city-multiplayer/compare/d3b1bfb79d4e997781037ce0723c193be5f5df7a...241c613b58cf624bb852d84aba1136f2f61e91f3",
+          "role": "historical-range"
+        }
+      ],
+      "role_bound_reference_count": 4
     }
   ],
   "reference_target_content_semantically_verified": false,
   "role_binding_only": true,
-  "role_bound_reference_count": 4,
-  "role_record_count": 1,
-  "schema": "axm.protocol-evolution.admitted-evidence-role-binding/v0.1",
-  "scope": "admitted-migration-path-evidence-reference-role-binding",
+  "role_bound_hold_reference_count": 11,
+  "role_bound_path_reference_count": 4,
+  "role_bound_reference_count": 15,
+  "role_record_count": 4,
+  "schema": "axm.protocol-evolution.edge-evidence-role-binding/v0.2",
+  "scope": "admitted-and-hold-edge-evidence-reference-role-binding",
+  "total_reference_count": 15,
   "valid": true
 }
