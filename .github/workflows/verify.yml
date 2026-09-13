@@ -52,3 +52,7 @@ jobs:
         run: python tools/monolith_candidate_census.py > /tmp/monolith_candidate_census.json
       - name: Assert monolith candidate census is valid JSON
         run: python -m json.tool /tmp/monolith_candidate_census.json > /dev/null
+      - name: Generate candidate promotion readiness
+        run: python tools/candidate_promotion_readiness.py > /tmp/candidate_promotion_readiness.json
+      - name: Assert candidate promotion readiness is valid JSON
+        run: python -m json.tool /tmp/candidate_promotion_readiness.json > /dev/null
