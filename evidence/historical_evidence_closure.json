@@ -1,0 +1,31 @@
+{
+  "all_exact_historical_routes_closed_across_evidence_layers": true,
+  "closed_exact_route_count": 1,
+  "errors": [],
+  "exact_historical_route_count": 1,
+  "generation_bound_exact_route_count": 1,
+  "history_supported_exact_route_count": 1,
+  "provenance_ready_exact_route_count": 1,
+  "records": [
+    {
+      "closed": true,
+      "generation_binding_id": "framestate-v0.1-route-to-generation",
+      "generation_id": "framestate-project-v0.1",
+      "path_history_observation_id": "framestate-v0.1-first-light-path-history-control",
+      "path_history_supports_historical_observation": true,
+      "provenance_ready": true,
+      "route_id": "framestate-v0.1-independent-historical-artifact-control"
+    }
+  ],
+  "schema": "axm.protocol-evolution.historical-fixture-evidence-closure/v0.1",
+  "truth_boundary": {
+    "adapter_translation_garden_ownership_unchanged": true,
+    "candidate_gap_promoted": false,
+    "closure_proves_internal_evidence_coverage_only": true,
+    "generation_admission_revalidated_or_granted": false,
+    "migration_execution_proven": false,
+    "migration_path_admission_granted": false,
+    "semantic_equivalence_proven": false
+  },
+  "valid": true
+}
