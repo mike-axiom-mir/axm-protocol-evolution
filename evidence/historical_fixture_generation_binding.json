@@ -1,0 +1,27 @@
+{
+  "schema": "axm.protocol-evolution.historical-fixture-generation-binding-evidence/v0.1",
+  "valid": true,
+  "errors": [],
+  "exact_historical_route_count": 1,
+  "binding_count": 1,
+  "bound_exact_historical_route_count": 1,
+  "all_exact_historical_routes_bound_to_generation_manifests": true,
+  "records": [
+    {
+      "id": "framestate-v0.1-route-to-generation",
+      "route_id": "framestate-v0.1-independent-historical-artifact-control",
+      "generation_id": "framestate-project-v0.1",
+      "expected_fixture_path": "fixtures/generations/framestate-v0.1/project.json",
+      "identity_tuple_matches": true
+    }
+  ],
+  "truth_boundary": {
+    "binding_proves_identity_agreement_only": true,
+    "generation_admission_revalidated_or_granted": false,
+    "migration_path_admission_granted": false,
+    "migration_execution_proven": false,
+    "semantic_equivalence_proven": false,
+    "candidate_gap_bound_to_admitted_generation": false,
+    "adapter_translation_garden_ownership_unchanged": true
+  }
+}
