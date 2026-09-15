@@ -1,0 +1,34 @@
+{
+  "adapter_translation_garden_ownership_changed": false,
+  "canon_authority_granted": false,
+  "chain_experiment_input_ready": false,
+  "direct_vs_chain_equivalence_proven": false,
+  "failures": [],
+  "receipt_count": 1,
+  "receipt_self_digest_proves_authorship": false,
+  "receipt_self_digest_proves_semantic_truth": false,
+  "receipt_self_digest_proves_transformer_execution": false,
+  "records": [
+    {
+      "assertions_checked": [
+        "undeclared_speech_engine=espeak"
+      ],
+      "compatibility_state": "LOSSLESS_MIGRATION",
+      "execution_observation_id": "framestate-v0.4-to-v0.5-execution-2026-09-15",
+      "id": "framestate-v0.4-to-v0.5-executed-receipt-2026-09-15",
+      "lineage_id": "framestate-project",
+      "path_id": "framestate-v0.4-to-v0.5-canonical-normalization",
+      "receipt_digest": "sha256:61e18682128e9e0cfbc2e71d60542fcfd70ff6ff6fe9cd421e044545a9222698",
+      "source_digest": "sha256:ac55e91b3e17ca1cb6e996435a17b0fdbaf8001d480cb6d1932778f9ed3a1ea8",
+      "source_generation": "framestate-project-v0.4",
+      "target_digest": "sha256:102125a406d95a3738736d11505a340e8356efaf558ebc255d0d14c3058923a0",
+      "target_generation": "framestate-project-v0.5",
+      "transformer": "mike-axiom-mir/axm-framestate@60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34:src/axm_framestate/canonical.py#normalize_project"
+    }
+  ],
+  "schema": "axm.protocol-evolution.executed-path-receipt-evidence/v0.1",
+  "scope": "receipt-binding-to-separately-grounded-admitted-path-execution",
+  "valid": true,
+  "valid_receipt_count": 1,
+  "whole_project_semantic_equivalence_proven": false
+}

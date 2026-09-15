@@ -1,0 +1,32 @@
+{
+  "schema": "axm.protocol-evolution.executed-path-receipts/v0.1",
+  "receipts": [
+    {
+      "id": "framestate-v0.4-to-v0.5-executed-receipt-2026-09-15",
+      "path_id": "framestate-v0.4-to-v0.5-canonical-normalization",
+      "execution_observation_id": "framestate-v0.4-to-v0.5-execution-2026-09-15",
+      "transformer_binding": {
+        "donor_file": "src/axm_framestate/canonical.py",
+        "callable": "normalize_project"
+      },
+      "receipt": {
+        "schema": "axm.protocol-evolution.migration-receipt/v0.1",
+        "source_digest": "sha256:ac55e91b3e17ca1cb6e996435a17b0fdbaf8001d480cb6d1932778f9ed3a1ea8",
+        "target_digest": "sha256:102125a406d95a3738736d11505a340e8356efaf558ebc255d0d14c3058923a0",
+        "transformer": "mike-axiom-mir/axm-framestate@60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34:src/axm_framestate/canonical.py#normalize_project",
+        "compatibility_state": "LOSSLESS_MIGRATION",
+        "losses": [],
+        "ambiguities": [],
+        "assertions_checked": [
+          "undeclared_speech_engine=espeak"
+        ],
+        "receipt_digest": "sha256:61e18682128e9e0cfbc2e71d60542fcfd70ff6ff6fe9cd421e044545a9222698"
+      }
+    }
+  ],
+  "notes": [
+    "This receipt is bound to the separately retained exact execution observation for the admitted FrameState v0.4 -> v0.5 path.",
+    "LOSSLESS_MIGRATION is scoped only to the checked undeclared_speech_engine=espeak preservation claim; it is not a whole-project equivalence claim.",
+    "A plain receipt self-digest does not prove authorship, transformer execution, semantic truth, direct-vs-chain equivalence, or CANON authority."
+  ]
+}
