@@ -118,3 +118,31 @@ jobs:
       - name: Replay v0.1 fixture through v0.2 reader while preserving HOLD
         working-directory: protocol-evolution
         run: python tools/replay_framestate_v01_v02_hold.py --donor-root ../donor/framestate-v02
+
+  replay-city-g1-g2-hold:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Protocol Evolution
+        uses: actions/checkout@v4
+        with:
+          path: protocol-evolution
+      - name: Checkout exact City Multiplayer G1 donor snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-city-multiplayer
+          ref: d3b1bfb79d4e997781037ce0723c193be5f5df7a
+          path: donor/city-g1
+          persist-credentials: false
+      - name: Checkout exact City Multiplayer G2 donor snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-city-multiplayer
+          ref: 241c613b58cf624bb852d84aba1136f2f61e91f3
+          path: donor/city-g2
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Replay valid G1 HELLO against exact G2 host while preserving HOLD
+        working-directory: protocol-evolution
+        run: python tools/replay_city_g1_g2_hold.py --g1-donor-root ../donor/city-g1 --g2-donor-root ../donor/city-g2
