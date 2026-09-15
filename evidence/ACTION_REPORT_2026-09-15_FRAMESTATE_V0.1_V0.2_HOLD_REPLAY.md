@@ -30,26 +30,46 @@ The expected result, based on the already-inspected v0.2 donor source, is narrow
 - At that exact v0.2 checkpoint, `normalize_project()` accepts both v0.1 and v0.2 project schemas and returns the incoming `schema` rather than rewriting it to v0.2.
 - The existing chain experiment remains blocked and FrameState v0.1 -> v0.2 has no admitted migration path.
 
-## Planned bounded improvement
+## Implemented bounded improvement
 
-Add one exact-donor CI replay for this HOLD edge. The replay will:
+An exact-donor replay now:
 
-- verify exact donor HEAD and donor file Git blobs;
-- verify the admitted v0.1 fixture identity;
-- import and execute the donor's own `normalize_project()` from the external checkout;
-- run the same input twice and require exact deterministic equality;
-- require source-object immutability;
-- require the output schema to remain v0.1;
-- run the pinned donor test module;
-- emit explicit non-promotion boundaries.
+- verifies exact donor HEAD and the pinned Git blobs for `canonical.py` and `test_machine.py`;
+- verifies the admitted v0.1 fixture against its historical manifest/source blob;
+- imports and executes the donor's own `normalize_project()` from the external checkout;
+- runs the same input twice and requires exact deterministic equality;
+- requires source-object immutability;
+- requires the output schema to remain v0.1 rather than becoming v0.2;
+- preserves the admitted v0.1 tone-only semantic claim;
+- runs the pinned donor `test_machine.py` suite;
+- emits explicit non-promotion boundaries.
 
-No donor migration/adapter implementation will be copied into Protocol Evolution. The Connected Monolith is not needed as a truth source for this replay.
+No donor migration/adapter implementation is copied into Protocol Evolution. The Connected Monolith is not used as a truth source for this replay.
 
-## Root gate before implementation
+## Observed result
 
-- **Truth:** executable behavior must decide whether the source-inspection HOLD description is accurate.
-- **Agency / non-domination:** replay is read-only and grants no migration/install/publish/CANON authority.
+The pull-request CI run on head `97f385b797982ea43722e6ab875e386a91de32fd` passed the new exact-donor replay job. Because the replay script fails closed on each falsifier above, that successful job grounds the following bounded observation for this exact fixture/donor pair:
+
+- the exact v0.2 donor accepted the admitted historical v0.1 fixture;
+- the source object remained unchanged;
+- two executions were exactly equal;
+- the observed normalized output remained schema `axm.framestate.project/v0.1`, not v0.2;
+- the tone-only source meaning remained intact;
+- the pinned donor test module completed successfully.
+
+The repository-wide foundation/evidence matrix also passed on Python 3.11, 3.12, and 3.13, and the existing exact-donor v0.4 -> v0.5 replay remained green.
+
+## Evidence meaning and limitations
+
+This is now **executable negative evidence** for the current migration question: the newer v0.2 implementation can read/canonicalize this exact v0.1 state, but the observed operation does not transform it into v0.2 state. Therefore the v0.1 -> v0.2 edge remains `HOLD`; no migration path is admitted.
+
+This does not prove that no v0.1 -> v0.2 migrator could exist elsewhere or be built later. It does not prove whole-project semantic equivalence, chain-vs-direct equivalence, or chain-experiment readiness. It grants no CANON, migration, install, publish, network, device, or user-data authority. Adapter & Translation Garden remains the migration/translation implementation donor.
+
+## Root gate after observation
+
+- **Truth:** the executable result agrees with the existing HOLD distinction and does not get relabeled as migration.
+- **Agency / non-domination:** replay is read-only and grants no new authority.
 - **Continuity:** historical fixtures, manifests, lineage, HOLD records, and prior admissions remain unchanged.
-- **Wisdom before speed:** strengthen one existing unresolved edge with execution before seeking a larger chain.
+- **Wisdom before speed:** one unresolved edge gained stronger evidence without lowering the admission gate.
 
-Implementation and merge are permitted only if the replay result matches the bounded claim and repository CI remains green.
+The four roots support merging this bounded replay/evidence improvement while keeping the edge on HOLD.
