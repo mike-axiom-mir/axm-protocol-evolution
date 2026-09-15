@@ -53,8 +53,10 @@ class SemanticCompatibilityTests(unittest.TestCase):
         result = negotiate_capabilities(left, right, required={"handshake.hello", "handshake.ack-admission"})
         self.assertEqual(result["state"], CompatibilityState.UNSUPPORTED.value)
         self.assertEqual(result["shared"], {"handshake.hello": "1"})
+        self.assertEqual(result["qualified_shared"], {"handshake.hello": "1"})
         self.assertEqual(result["missing_required"], ["handshake.ack-admission"])
         self.assertEqual(result["unobserved_required"], [])
+        self.assertEqual(result["insufficient_evidence_required"], [])
 
     def test_incomplete_inventory_does_not_turn_missing_evidence_into_unsupported(self):
         result = negotiate_capabilities(
@@ -66,6 +68,7 @@ class SemanticCompatibilityTests(unittest.TestCase):
         self.assertEqual(result["state"], CompatibilityState.AMBIGUOUS.value)
         self.assertEqual(result["missing_required"], [])
         self.assertEqual(result["unobserved_required"], ["timeline.integer-sample"])
+        self.assertEqual(result["insufficient_evidence_required"], [])
 
     def test_complete_inventory_missing_required_capability_is_unsupported(self):
         result = negotiate_capabilities(
@@ -77,6 +80,7 @@ class SemanticCompatibilityTests(unittest.TestCase):
         self.assertEqual(result["state"], CompatibilityState.UNSUPPORTED.value)
         self.assertEqual(result["missing_required"], ["timeline.integer-sample"])
         self.assertEqual(result["unobserved_required"], [])
+        self.assertEqual(result["insufficient_evidence_required"], [])
 
     def test_observed_version_mismatch_is_unsupported_even_with_incomplete_inventories(self):
         result = negotiate_capabilities(
@@ -89,6 +93,7 @@ class SemanticCompatibilityTests(unittest.TestCase):
         self.assertEqual(result["state"], CompatibilityState.UNSUPPORTED.value)
         self.assertEqual(result["version_mismatches"], ["timeline.integer-sample"])
         self.assertEqual(result["unobserved_required"], [])
+        self.assertEqual(result["insufficient_evidence_required"], [])
 
     def test_shared_exact_capability_survives_unobserved_second_requirement(self):
         result = negotiate_capabilities(
@@ -99,7 +104,64 @@ class SemanticCompatibilityTests(unittest.TestCase):
         )
         self.assertEqual(result["state"], CompatibilityState.AMBIGUOUS.value)
         self.assertEqual(result["shared"], {"handshake.hello": "1"})
+        self.assertEqual(result["qualified_shared"], {"handshake.hello": "1"})
         self.assertEqual(result["unobserved_required"], ["handshake.ack-admission"])
+
+    def test_execution_threshold_does_not_promote_declaration_equality(self):
+        capability = "timeline.integer-sample"
+        version = "axm.callable-capability/v0.1"
+        result = negotiate_capabilities(
+            {capability: version},
+            {capability: version},
+            required={capability},
+            left_evidence={capability: "declared"},
+            right_evidence={capability: "declared"},
+            minimum_evidence="executed",
+        )
+        self.assertEqual(result["state"], CompatibilityState.AMBIGUOUS.value)
+        self.assertEqual(result["shared"], {capability: version})
+        self.assertEqual(result["qualified_shared"], {})
+        self.assertEqual(result["insufficient_evidence_required"], [capability])
+        self.assertEqual(result["evidence_shortfalls"], {capability: ["left", "right"]})
+
+    def test_execution_threshold_accepts_exact_execution_grounded_pair(self):
+        capability = "timeline.integer-sample"
+        version = "axm.callable-capability/v0.1"
+        result = negotiate_capabilities(
+            {capability: version},
+            {capability: version},
+            required={capability},
+            left_evidence={capability: "executed"},
+            right_evidence={capability: "executed"},
+            minimum_evidence="executed",
+        )
+        self.assertEqual(result["state"], CompatibilityState.SAME.value)
+        self.assertEqual(result["qualified_shared"], {capability: version})
+        self.assertEqual(result["insufficient_evidence_required"], [])
+
+    def test_version_mismatch_stays_unsupported_under_execution_threshold(self):
+        capability = "timeline.integer-sample"
+        result = negotiate_capabilities(
+            {capability: "v0.1"},
+            {capability: "v0.2"},
+            required={capability},
+            left_evidence={capability: "declared"},
+            right_evidence={capability: "declared"},
+            minimum_evidence="executed",
+        )
+        self.assertEqual(result["state"], CompatibilityState.UNSUPPORTED.value)
+        self.assertEqual(result["version_mismatches"], [capability])
+        self.assertEqual(result["insufficient_evidence_required"], [])
+
+    def test_unknown_capability_evidence_level_is_rejected(self):
+        capability = "timeline.integer-sample"
+        with self.assertRaises(ValueError):
+            negotiate_capabilities(
+                {capability: "v0.1"},
+                {capability: "v0.1"},
+                required={capability},
+                left_evidence={capability: "probably"},
+            )
 
     def test_receipt_binds_source_target_and_result(self):
         source = {"schema": "demo/v1", "value": 1}
