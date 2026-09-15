@@ -72,3 +72,7 @@ jobs:
         run: python tools/historical_evidence_closure.py > /tmp/historical_evidence_closure.json
       - name: Assert historical fixture evidence closure is valid JSON
         run: python -m json.tool /tmp/historical_evidence_closure.json > /dev/null
+      - name: Generate admitted-path execution evidence
+        run: python tools/path_execution_evidence.py > /tmp/path_execution_evidence.json
+      - name: Assert admitted-path execution evidence is valid JSON
+        run: python -m json.tool /tmp/path_execution_evidence.json > /dev/null
