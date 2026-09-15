@@ -34,7 +34,14 @@ jobs:
           python-version: "3.12"
       - name: Replay real later speech engine field against v0.2 donor
         working-directory: protocol-evolution
-        run: >-
-          python tools/replay_framestate_v02_future_field.py
-          --old-donor-root ../donor/framestate-v02
-          --later-donor-root ../donor/framestate-later
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(python tools/replay_framestate_v02_future_field.py \
+            --old-donor-root ../donor/framestate-v02 \
+            --later-donor-root ../donor/framestate-later)"
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -F '"old_intermediary_outcome": "REFUSE"'
+          printf '%s\n' "$output" | grep -F '"silent_drop_observed": false'
+          printf '%s\n' "$output" | grep -F '"reinterpretation_observed": false'
+          printf '%s\n' "$output" | grep -F '"probe_object_unchanged": true'
