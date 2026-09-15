@@ -119,6 +119,27 @@ jobs:
         working-directory: protocol-evolution
         run: python tools/replay_framestate_v01_v02_hold.py --donor-root ../donor/framestate-v02
 
+  replay-framestate-v02-v04-hold:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Protocol Evolution
+        uses: actions/checkout@v4
+        with:
+          path: protocol-evolution
+      - name: Checkout exact FrameState donor snapshot named by v0.4 evidence
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-framestate
+          ref: 60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34
+          path: donor/framestate-v04-evidence
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Replay v0.2 fixture through exact later donor while preserving HOLD
+        working-directory: protocol-evolution
+        run: python tools/replay_framestate_v02_v04_hold.py --donor-root ../donor/framestate-v04-evidence
+
   replay-city-g1-g2-hold:
     runs-on: ubuntu-latest
     steps:
