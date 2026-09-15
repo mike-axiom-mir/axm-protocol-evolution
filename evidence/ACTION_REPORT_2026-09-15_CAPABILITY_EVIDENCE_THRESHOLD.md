@@ -1,7 +1,7 @@
 # Action Report — capability evidence threshold
 
 Date: 2026-09-15
-Status: experiment in progress; merge gate pending
+Status: implementation complete; root/CI gate passed at reviewed PR head
 
 ## Bounded question
 
@@ -19,28 +19,51 @@ The improvement fails if any of these occur:
 6. existing callers that do not request an execution threshold change behavior;
 7. malformed evidence-level vocabulary is silently accepted as compatibility evidence.
 
+This falsifier was committed as the first branch commit before implementation.
+
 ## Grounded trigger
 
 FrameState commit `41c9c6827e64613b523b28536ab864dddf046d93` exposes `timeline.integer-sample` through `AXM_MODULE.json` with callable schema `axm.callable-capability/v0.1` and an evidence note saying the source is executable and regression-covered. The same descriptor's truth boundary explicitly says that the descriptor existing does not by itself prove Monolith execution. Protocol Evolution therefore needs a way to distinguish exact declaration agreement from a caller's stronger requirement for execution-grounded evidence without falling back to product/schema version inference.
 
 This cycle does not claim that two independent FrameState generations executed the capability, does not create a new historical generation, and does not promote any migration path. The exact donor descriptor is the grounding example for the semantics, not privileged truth.
 
-## Planned bounded delta
+## Implemented delta
 
-- keep capability inventories and exact version matching as the existing negotiation floor;
-- add an optional minimum evidence threshold (`declared` by default, `executed` when explicitly requested);
-- allow callers to state per-capability evidence for each side;
-- report exact-version requirements below the requested threshold as explicit ambiguity, not incompatibility;
-- preserve existing unsupported and incomplete-inventory behavior;
-- add focused regressions and update capability-negotiation documentation.
+- capability inventories and exact version matching remain the negotiation floor;
+- `minimum_evidence` is optional and defaults to `declared`;
+- per-capability evidence can be supplied for each side as `declared` or `executed`;
+- exact declaration matches remain visible under `shared`;
+- only exact pairs meeting the requested evidence threshold appear under `qualified_shared`;
+- required exact-version pairs below an explicitly requested threshold produce `AMBIGUOUS` through `insufficient_evidence_required` plus side-specific `evidence_shortfalls`;
+- observed version mismatch and complete-inventory absence remain `UNSUPPORTED`;
+- incomplete-inventory absence remains `AMBIGUOUS`;
+- unknown or stale evidence declarations are rejected instead of silently contributing compatibility evidence;
+- existing callers retain declaration-level semantics by default.
+
+## Verification
+
+PR-head GitHub Actions completed successfully on the implementation head:
+
+- repository `verify` workflow: **success**, including the Python 3.11 / 3.12 / 3.13 foundation matrix and the existing exact-donor replay jobs;
+- dedicated `replay-framestate-v02-future-field` workflow: **success**;
+- four new foundation regressions cover declaration-only ambiguity under an execution threshold, execution-grounded exact agreement, version-mismatch precedence, and invalid evidence vocabulary;
+- existing capability/inventory regressions remain in the same suite and passed.
+
+A final overlap scan found this PR as the only open Protocol Evolution lane and `main` remained at the tested base `342bcde8e0e3e3b1d7460ed90db701177e501df8` before the evidence-only finalization commit.
+
+## Limits
+
+This change does **not** prove FrameState capability execution merely from `AXM_MODULE.json`, does not authenticate caller-supplied evidence labels, does not define universal evidence levels beyond the current two-state vocabulary, does not infer version ranges, and does not prove whole-product compatibility. It changes no historical fixture, lineage, path admission, HOLD result, migration execution result, or candidate promotion state.
 
 ## Donor / authority boundary
 
 Adapter & Translation Garden remains the adapter/translation implementation owner. No adapter, migration router, canonical-state mutation, install, publish, network, merge/CANON, or user-data authority is added.
 
-## Root gate before implementation
+## Root gate
 
-- Truth: declaration equality must not masquerade as stronger execution evidence.
-- Agency / non-domination: callers choose the evidence threshold; no hidden promotion occurs.
-- Continuity: default behavior remains backward-compatible and historical fixtures/source lineage remain untouched.
-- Wisdom before speed: add the smallest evidence-sensitive negotiation rule instead of inferring execution from version or descriptor presence.
+- Truth: PASS — declaration equality can no longer satisfy a caller's explicitly stronger execution-evidence requirement.
+- Agency / non-domination: PASS — the stronger threshold is opt-in and visible; no hidden promotion occurs.
+- Continuity: PASS — default behavior remains backward-compatible and historical/source lineage is untouched.
+- Wisdom before speed: PASS — the change adds one bounded semantic distinction instead of inferring execution from product/schema/version or descriptor presence.
+
+Merge is justified only if the final PR head remains green after this evidence-only report finalization.
