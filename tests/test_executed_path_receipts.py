@@ -12,6 +12,7 @@ from protocol_evolution.executed_path_receipts import analyze_executed_path_rece
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "fixtures" / "executed_path_receipts.json"
 EXECUTION_FIXTURE = ROOT / "fixtures" / "path_execution_observations.json"
+CHECKED_EVIDENCE = ROOT / "evidence" / "executed_path_receipt_evidence.json"
 
 
 def load_json(path: Path):
@@ -50,6 +51,9 @@ class ExecutedPathReceiptTests(unittest.TestCase):
         self.assertFalse(result["chain_experiment_input_ready"])
         self.assertFalse(result["canon_authority_granted"])
         self.assertFalse(result["adapter_translation_garden_ownership_changed"])
+
+    def test_checked_in_evidence_matches_generator(self):
+        self.assertEqual(self.analyze(), load_json(CHECKED_EVIDENCE))
 
     def test_rehashed_wrong_source_digest_fails(self):
         payload = deepcopy(self.payload)
@@ -111,6 +115,10 @@ class ExecutedPathReceiptTests(unittest.TestCase):
         self.assertIn("path-execution-evidence-invalid", result["failures"])
 
     def test_rehashed_loss_or_ambiguity_claim_fails(self):
+        expected_failure = {
+            "losses": "unexpected-loss-claims",
+            "ambiguities": "unexpected-ambiguity-claims",
+        }
         for field in ("losses", "ambiguities"):
             with self.subTest(field=field):
                 payload = deepcopy(self.payload)
@@ -119,7 +127,7 @@ class ExecutedPathReceiptTests(unittest.TestCase):
                 rehash(receipt)
                 result = self.analyze(payload)
                 self.assertFalse(result["valid"])
-                self.assertTrue(any(f"unexpected-{field[:-1] if field.endswith('s') else field}" in failure or field[:-1] in failure for failure in result["failures"]))
+                self.assertTrue(any(expected_failure[field] in failure for failure in result["failures"]))
 
 
 if __name__ == "__main__":
