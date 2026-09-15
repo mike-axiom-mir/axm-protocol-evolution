@@ -1,7 +1,7 @@
 # Action Report — FrameState v0.4 -> v0.5 exact donor CI replay
 
 Date: 2026-09-15
-Status: **IN PROGRESS / falsifier committed before implementation**
+Status: **PASS / bounded replay grounded; merge still requires final-head CI**
 
 ## Bounded question
 
@@ -37,23 +37,55 @@ PR #28 retained one exact execution observation for the admitted path `framestat
 - legacy `espeak` and current `native` semantic expectations;
 - 5/5 targeted donor tests observed during the original bounded run.
 
-The existing generated evidence deliberately states `donor_execution_replayed_in_ci: false`. This cycle tests that exact remaining limitation rather than adding a broader migration abstraction.
+The existing generated retained-evidence analyzer does not itself execute the donor. This cycle tests that remaining reproducibility gap through a separate exact-donor CI gate rather than pretending an offline generator can observe another job's execution.
 
-## Donor and authority boundary
+## Implemented bounded delta
 
-Protocol Evolution may check out and call the pinned FrameState donor as evidence. It must not copy the donor normalizer into this repository. Adapter & Translation Garden remains the adapter/translation implementation donor and is not duplicated or displaced.
+- added `tools/replay_framestate_v04_v05.py`;
+- the harness imports FrameState from an external exact-commit checkout and copies none of its normalizer implementation;
+- it verifies donor HEAD and the `canonical.py` / `tests/test_speech.py` Git blobs already bound by the retained observation;
+- it verifies exact admitted source/control fixture identities;
+- it reruns source and control normalization and requires both input objects to remain unchanged;
+- it requires exact equality with both retained outputs and their canonical digests;
+- it requires the legacy `espeak` and current `native` semantic outcomes;
+- it reruns the donor's targeted five-test speech suite and fails unless all five pass;
+- added CI job `replay-framestate-v04-v05`, which checks out the donor at the exact pinned commit and runs the harness.
 
-## Root gate before implementation
+## Observed evidence
 
-- **Truth** — a retained output is not the same thing as a reproducible cross-repo execution; exact replay must either run or remain HOLD.
-- **Agency / non-domination** — replay is read-only evidence work and grants no migration, install, publish, device, network, merge, or CANON authority.
-- **Continuity** — historical fixtures, path admissions, HOLD records, source lineage, and the original execution observation remain unchanged.
-- **Wisdom before speed** — strengthen one real admitted path before widening the experiment.
+GitHub Actions workflow run `34951974927` on PR #29 head `c41c88957e545190a2521db435958a1e41b4e22d` completed with conclusion **success**.
 
-## Intended bounded delta
+The dedicated replay job `104324839243` completed with conclusion **success**. Its exact donor checkout step succeeded, followed by the replay harness. Because the harness is fail-closed, that successful exit means the donor HEAD/blob checks, fixture identity checks, source/control non-mutation checks, exact retained-output reproduction, `espeak`/`native` semantic assertions, and the targeted donor 5-test speech regression all passed for this run.
 
-Add a small replay harness that imports the pinned donor implementation from an external checkout, verifies donor and fixture identities, reruns the exact source/control normalization and targeted donor regression, and compares the replay byte-for-meaning result against the retained evidence. Add one dedicated CI job for this replay. Do not change chain readiness or admit any new path.
+The repository-wide verification matrix in the same workflow also completed successfully. The historical observation of this run is preserved separately in `evidence/path_execution_ci_replay_observation.json`.
 
 ## Result
 
-Pending implementation and CI evidence.
+**PASS for the bounded question.** The admitted FrameState v0.4 -> v0.5 execution is no longer supported only by retained output evidence: one exact cross-repository CI replay has now reproduced it from the pinned donor snapshot without copying donor migration code.
+
+This upgrades reproducibility for one already-admitted path only. It does not admit another path or generation and does not make the larger chain experiment ready.
+
+## Limitations
+
+- the retained-evidence generator still validates retained artifacts offline; it does not itself execute the donor;
+- the new result is one observed CI replay, not a claim that every future replay will pass;
+- GitHub's run record is observed evidence, not a cryptographic attestation produced by this repository;
+- only the declared speech-default semantic distinction is checked here, not whole-project semantic equivalence;
+- no direct-vs-chain comparison was performed;
+- no Living City candidate was promoted;
+- no Adapter & Translation Garden implementation was copied or displaced.
+
+## Donor and authority boundary
+
+Protocol Evolution checks out and calls the pinned FrameState donor as evidence. It does not copy the donor normalizer into this repository. Adapter & Translation Garden remains the adapter/translation implementation donor and is not duplicated or displaced.
+
+## Root gate
+
+- **Truth** — retained evidence was reconnected to exact executable donor state and the replay remained bounded to what actually ran.
+- **Agency / non-domination** — replay is read-only evidence work and grants no migration, install, publish, device, network, merge, or CANON authority.
+- **Continuity** — historical fixtures, path admissions, HOLD records, source lineage, and the original execution observation remain unchanged; the CI observation is additive.
+- **Wisdom before speed** — one real path gained reproducible cross-repo evidence without widening claims or manufacturing another admission.
+
+## Merge condition
+
+Merge only if the final PR head again passes both the repository-wide verification matrix and the exact donor replay job.
