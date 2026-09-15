@@ -20,14 +20,34 @@ A grounded positive result for this question is narrower: the exact old donor ei
 ## Current evidence before implementation
 - The admitted FrameState v0.2 fixture contains a speech event but no `engine` field.
 - FrameState at the exact later donor commit `60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34` contains `examples/native_speech.json` with explicit `"engine": "native"` on a speech event.
-- Source inspection of the exact v0.2 donor at `5d46363fb30bf5d30198b8cdec473d3bb9ba6287` shows speech-event fields are closed and do not include `engine`; executable behavior has not yet been recorded in Protocol Evolution.
+- Source inspection of the exact v0.2 donor at `5d46363fb30bf5d30198b8cdec473d3bb9ba6287` shows speech-event fields are closed and do not include `engine`; executable behavior had not yet been recorded in Protocol Evolution.
 - Protocol Evolution's existing `carry_unknown_fields()` test is synthetic and proves only the generic helper contract, not FrameState donor behavior.
+
+## Grounded result
+The exact-donor replay verifies both donor checkouts and the admitted v0.2 fixture by pinned Git identity. The untouched admitted v0.2 fixture normalizes successfully and deterministically under the exact v0.2 donor.
+
+A synthetic probe is then derived by adding only the real later `engine="native"` field to that fixture's existing speech event. The exact v0.2 donor returns its explicit unsupported-field error. The replay gate requires the machine-readable result to say `old_intermediary_outcome: REFUSE`, requires the probe to remain unchanged, and rejects any silent drop or reinterpretation. The dedicated exact-donor workflow passed those assertions.
+
+Therefore this real old-intermediary boundary demonstrates **safe refusal**, not opaque preservation. It complements rather than upgrades the generic synthetic `carry_unknown_fields()` preservation test.
+
+## Verification
+- exact v0.2 donor: `5d46363fb30bf5d30198b8cdec473d3bb9ba6287`;
+- exact later donor: `60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34`;
+- exact donor file/blob identities are checked before execution;
+- admitted v0.2 fixture identity is checked before execution;
+- exact future-field replay workflow passed, including explicit `REFUSE`, no mutation, no silent drop, and no reinterpretation assertions;
+- repository `verify` workflow passed on Python 3.11, 3.12, and 3.13 together with all pre-existing exact-donor replay jobs.
+
+## Limitations
+This does not prove that every FrameState future field will be refused, that an external translation bridge cannot safely preserve or translate `engine`, that the v0.2 and later projects are wholly incompatible, or that refusal is preferable to opaque preservation in every protocol. The synthetic probe is not historical state. No migration path or generation is admitted by this result.
 
 ## Donor boundary
 Protocol Evolution observes and classifies the compatibility boundary only. It does not add a FrameState migration/adapter and does not duplicate Adapter & Translation Garden. The probe created by this experiment is synthetic test input derived from an admitted fixture plus one real later field; it is not historical evidence.
 
-## Root gate before implementation
-- **Truth:** distinguish real donor behavior from the synthetic preservation helper and distinguish refusal from preservation.
-- **Agency / non-domination:** read-only donor replay; no migration, install, publish, or CANON authority.
-- **Continuity:** historical fixtures and source lineage remain unchanged.
-- **Wisdom before speed:** test one explicit future field against one exact older donor before generalizing unknown-field claims.
+## Root gate
+- **Truth:** real exact-donor behavior is distinguished from the synthetic preservation helper; refusal is not mislabeled preservation.
+- **Agency / non-domination:** read-only donor replay grants no migration, install, publish, or CANON authority.
+- **Continuity:** historical fixtures, admissions, and source lineage remain unchanged.
+- **Wisdom before speed:** one real future-field boundary is now grounded without manufacturing a bridge to improve a metric.
+
+Result: roots permit integration if the final head remains green and non-overlapping.
