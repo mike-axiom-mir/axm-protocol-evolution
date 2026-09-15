@@ -76,6 +76,10 @@ jobs:
         run: python tools/path_execution_evidence.py > /tmp/path_execution_evidence.json
       - name: Assert admitted-path execution evidence is valid JSON
         run: python -m json.tool /tmp/path_execution_evidence.json > /dev/null
+      - name: Generate executed-path receipt evidence
+        run: python tools/executed_path_receipts.py > /tmp/executed_path_receipt_evidence.json
+      - name: Assert executed-path receipt evidence is valid JSON
+        run: python -m json.tool /tmp/executed_path_receipt_evidence.json > /dev/null
 
   replay-framestate-v04-v05:
     runs-on: ubuntu-latest
