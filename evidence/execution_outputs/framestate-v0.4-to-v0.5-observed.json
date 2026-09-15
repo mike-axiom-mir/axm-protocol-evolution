@@ -1,0 +1,43 @@
+{
+  "audio": [
+    {
+      "end_frame": 24,
+      "engine": "espeak",
+      "gain_milli": 1000,
+      "id": "voice",
+      "kind": "speech",
+      "loop": false,
+      "pan_milli": 0,
+      "rate_wpm": 165,
+      "source_start_frame": 0,
+      "start_frame": 0,
+      "text": "hello",
+      "voice": "en"
+    }
+  ],
+  "background": [
+    0,
+    0,
+    0
+  ],
+  "camera": {
+    "x": 0,
+    "y": 0,
+    "zoom_milli": 1000
+  },
+  "canvas": {
+    "fps": 24,
+    "height": 64,
+    "width": 64
+  },
+  "captions": [],
+  "duration_frames": 24,
+  "effects": [],
+  "id": "speech-default-proof",
+  "layers": [],
+  "markers": [],
+  "media": [],
+  "metadata": {},
+  "schema": "axm.framestate.project/v0.5",
+  "title": "speech default proof"
+}
