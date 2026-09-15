@@ -76,3 +76,24 @@ jobs:
         run: python tools/path_execution_evidence.py > /tmp/path_execution_evidence.json
       - name: Assert admitted-path execution evidence is valid JSON
         run: python -m json.tool /tmp/path_execution_evidence.json > /dev/null
+
+  replay-framestate-v04-v05:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Protocol Evolution
+        uses: actions/checkout@v4
+        with:
+          path: protocol-evolution
+      - name: Checkout exact FrameState donor snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-framestate
+          ref: 60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34
+          path: donor/framestate
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Replay admitted FrameState v0.4 -> v0.5 path
+        working-directory: protocol-evolution
+        run: python tools/replay_framestate_v04_v05.py --donor-root ../donor/framestate
