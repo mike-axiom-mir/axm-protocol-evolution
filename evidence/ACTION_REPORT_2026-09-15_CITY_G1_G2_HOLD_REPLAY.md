@@ -33,31 +33,56 @@ The expected result from the already-inspected donor source is narrower: a valid
 - The G2 donor regression `tests/test_p2p.py` includes both ACK-before-admission and wrong-handshake-version rejection checks.
 - No City G1 -> G2 migration path is admitted. The existing HOLD records no dual-stack negotiation, packet/state transformer, adapter, receipt, or derived G2 exchange bound to the G1 fixture.
 
-## Planned bounded implementation
+## Implemented bounded improvement
 
-The replay will remain outside donor implementation ownership:
+The replay stays outside donor implementation ownership:
 
-- CI will checkout the exact G1 and G2 donor commits separately;
-- the replay will verify donor HEADs and bounded file Git blob identities;
-- a subprocess using the exact G1 donor will create a live invite plus a correctly authenticated G1 HELLO using G1's own `_mac()` implementation;
-- the exact G2 donor will decode that invite and receive the G1 HELLO through its own `P2PHost._handle()` path with a fake datagram socket;
-- the replay will require zero G2 reply packets, zero pending handshakes, and zero admitted peers for the valid G1 message;
-- a same-run G2 control will generate a protocol-v2 HELLO using the exact G2 donor, require WELCOME but no admission yet, then send a valid ACK and require exactly one admitted peer;
-- the exact G2 donor `tests/test_p2p.py` suite will run as an independent regression control.
+- CI checks out the exact G1 and G2 donor commits separately;
+- the replay verifies donor HEADs and bounded file Git blob identities;
+- a subprocess using the exact G1 donor creates a live invite plus a correctly authenticated G1 HELLO using G1's own `_mac()` implementation;
+- the exact G2 donor decodes that invite and receives the G1 HELLO through its own `P2PHost._handle()` path with a fake datagram socket;
+- the replay requires zero G2 reply packets, zero pending handshakes, and zero admitted peers for the valid G1 message;
+- a same-run G2 control generates a protocol-v2 HELLO using the exact G2 donor, requires WELCOME but no admission yet, then sends a valid ACK and requires exactly one admitted peer;
+- the exact G2 donor `tests/test_p2p.py` suite runs as an independent regression control.
 
-No migration/translation adapter will be copied or implemented here. The Connected Monolith is not used as privileged truth for this cycle.
+No migration/translation adapter is copied or implemented here. The Connected Monolith is not used as privileged truth for this cycle.
+
+## Observed result
+
+Pull-request CI on head `50192ee3e922a2104ebcf4a51502e524b3aa40f5` passed all six jobs in workflow run `34962796240`:
+
+- foundation verification on Python 3.11;
+- foundation verification on Python 3.12;
+- foundation verification on Python 3.13;
+- exact-donor FrameState v0.4 -> v0.5 replay;
+- exact-donor FrameState v0.1 -> v0.2 HOLD replay;
+- the new exact-donor City G1 -> G2 HOLD replay.
+
+The City replay itself returned `valid: true` and observed all of the bounded expected outcomes:
+
+- the exact G1 donor generated a correctly authenticated G1 HELLO;
+- that HELLO had no protocol-version field, matching generation 1;
+- the exact admitted G2 host sent no reply to the G1 HELLO;
+- the G2 host created no pending handshake for it;
+- the G2 host admitted no peer from it;
+- the same G2 host did send WELCOME for a valid generation-2 HELLO;
+- it did not admit the generation-2 control before ACK;
+- it admitted the generation-2 control after a valid authenticated ACK;
+- the pinned G2 donor handshake regression suite passed.
+
+No falsifier was triggered. This upgrades the existing City G1 -> G2 finding from source/history inspection to reproducible **executable negative evidence** for this exact donor pair: the admitted G2 host does not interpret a valid exact-donor G1 HELLO as a generation-2 exchange, while its own generation-2 exchange succeeds in the same harness.
 
 ## Evidence meaning and limitations
 
-If the falsifier is not triggered, the result will establish executable negative evidence only for this exact admitted donor pair and handshake boundary: the exact G2 host does not interpret a valid G1 HELLO as a G2 exchange, while its own G2 exchange works under the same bounded test setup.
+The City edge remains `HOLD`. This replay does not admit a migration path and does not advance chain-experiment readiness.
 
-That would not prove universal absence of a bridge, production-network incompatibility, whole-game incompatibility, semantic equivalence, or impossibility of a future Adapter & Translation Garden bridge. It would not admit a migration path or advance the chain experiment.
+It does not prove universal absence of a bridge, production-network incompatibility, whole-game incompatibility, semantic equivalence, or impossibility of a future Adapter & Translation Garden bridge. The executable rejection is evidence about the exact admitted donor boundary, not a theorem about every possible translator or future implementation.
 
-## Root gate before implementation
+## Root gate after observation
 
-- **Truth:** require exact donor identity and a positive G2 control so rejection cannot masquerade as a broken harness.
+- **Truth:** exact donor identities and a successful G2 positive control rule out treating a broken harness as incompatibility evidence; the observed G1 rejection is reported only at the tested boundary.
 - **Agency / non-domination:** replay is read-only and grants no migration, install, publish, network, device, user-data, or CANON authority.
-- **Continuity:** preserve historical fixtures, manifests, lineage, HOLD state, donor refs, and source history unchanged.
-- **Wisdom before speed:** strengthen one unresolved edge with executable evidence rather than inventing a bridge merely to increase readiness.
+- **Continuity:** historical fixtures, manifests, lineage, HOLD state, donor refs, prior admissions, and source history remain unchanged.
+- **Wisdom before speed:** one unresolved edge gained reproducible executable evidence without inventing a bridge merely to increase readiness.
 
-Merge is permitted only if the implemented replay matches these boundaries and repository CI passes. Otherwise this cycle remains HOLD/open with the exact blocker recorded.
+The four roots support merging this bounded replay/evidence improvement while keeping the City G1 -> G2 edge on HOLD.
