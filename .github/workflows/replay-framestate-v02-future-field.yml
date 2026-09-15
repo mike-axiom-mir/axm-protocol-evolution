@@ -1,0 +1,47 @@
+name: replay-framestate-v02-future-field
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  replay-framestate-v02-future-field:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Protocol Evolution
+        uses: actions/checkout@v4
+        with:
+          path: protocol-evolution
+      - name: Checkout exact FrameState v0.2 donor snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-framestate
+          ref: 5d46363fb30bf5d30198b8cdec473d3bb9ba6287
+          path: donor/framestate-v02
+          persist-credentials: false
+      - name: Checkout exact later FrameState donor snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-framestate
+          ref: 60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34
+          path: donor/framestate-later
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Replay real later speech engine field against v0.2 donor
+        working-directory: protocol-evolution
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(python tools/replay_framestate_v02_future_field.py \
+            --old-donor-root ../donor/framestate-v02 \
+            --later-donor-root ../donor/framestate-later)"
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -F '"old_intermediary_outcome": "REFUSE"'
+          printf '%s\n' "$output" | grep -F '"silent_drop_observed": false'
+          printf '%s\n' "$output" | grep -F '"reinterpretation_observed": false'
+          printf '%s\n' "$output" | grep -F '"probe_object_unchanged": true'
