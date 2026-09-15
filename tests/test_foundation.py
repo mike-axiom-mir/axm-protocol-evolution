@@ -54,6 +54,52 @@ class SemanticCompatibilityTests(unittest.TestCase):
         self.assertEqual(result["state"], CompatibilityState.UNSUPPORTED.value)
         self.assertEqual(result["shared"], {"handshake.hello": "1"})
         self.assertEqual(result["missing_required"], ["handshake.ack-admission"])
+        self.assertEqual(result["unobserved_required"], [])
+
+    def test_incomplete_inventory_does_not_turn_missing_evidence_into_unsupported(self):
+        result = negotiate_capabilities(
+            {},
+            {"timeline.integer-sample": "axm.callable-capability/v0.1"},
+            required={"timeline.integer-sample"},
+            left_complete=False,
+        )
+        self.assertEqual(result["state"], CompatibilityState.AMBIGUOUS.value)
+        self.assertEqual(result["missing_required"], [])
+        self.assertEqual(result["unobserved_required"], ["timeline.integer-sample"])
+
+    def test_complete_inventory_missing_required_capability_is_unsupported(self):
+        result = negotiate_capabilities(
+            {},
+            {"timeline.integer-sample": "axm.callable-capability/v0.1"},
+            required={"timeline.integer-sample"},
+            left_complete=True,
+        )
+        self.assertEqual(result["state"], CompatibilityState.UNSUPPORTED.value)
+        self.assertEqual(result["missing_required"], ["timeline.integer-sample"])
+        self.assertEqual(result["unobserved_required"], [])
+
+    def test_observed_version_mismatch_is_unsupported_even_with_incomplete_inventories(self):
+        result = negotiate_capabilities(
+            {"timeline.integer-sample": "v0.1"},
+            {"timeline.integer-sample": "v0.2"},
+            required={"timeline.integer-sample"},
+            left_complete=False,
+            right_complete=False,
+        )
+        self.assertEqual(result["state"], CompatibilityState.UNSUPPORTED.value)
+        self.assertEqual(result["version_mismatches"], ["timeline.integer-sample"])
+        self.assertEqual(result["unobserved_required"], [])
+
+    def test_shared_exact_capability_survives_unobserved_second_requirement(self):
+        result = negotiate_capabilities(
+            {"handshake.hello": "1"},
+            {"handshake.hello": "1", "handshake.ack-admission": "2"},
+            required={"handshake.hello", "handshake.ack-admission"},
+            left_complete=False,
+        )
+        self.assertEqual(result["state"], CompatibilityState.AMBIGUOUS.value)
+        self.assertEqual(result["shared"], {"handshake.hello": "1"})
+        self.assertEqual(result["unobserved_required"], ["handshake.ack-admission"])
 
     def test_receipt_binds_source_target_and_result(self):
         source = {"schema": "demo/v1", "value": 1}
