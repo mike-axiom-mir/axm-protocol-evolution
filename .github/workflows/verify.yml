@@ -97,3 +97,24 @@ jobs:
       - name: Replay admitted FrameState v0.4 -> v0.5 path
         working-directory: protocol-evolution
         run: python tools/replay_framestate_v04_v05.py --donor-root ../donor/framestate
+
+  replay-framestate-v01-v02-hold:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Protocol Evolution
+        uses: actions/checkout@v4
+        with:
+          path: protocol-evolution
+      - name: Checkout exact FrameState v0.2 donor snapshot
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-framestate
+          ref: 5d46363fb30bf5d30198b8cdec473d3bb9ba6287
+          path: donor/framestate-v02
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Replay v0.1 fixture through v0.2 reader while preserving HOLD
+        working-directory: protocol-evolution
+        run: python tools/replay_framestate_v01_v02_hold.py --donor-root ../donor/framestate-v02
