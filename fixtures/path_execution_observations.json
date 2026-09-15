@@ -1,0 +1,62 @@
+{
+  "schema": "axm.protocol-evolution.path-execution-observations/v0.1",
+  "observations": [
+    {
+      "id": "framestate-v0.4-to-v0.5-execution-2026-09-15",
+      "path_id": "framestate-v0.4-to-v0.5-canonical-normalization",
+      "lineage_id": "framestate-project",
+      "source_generation": "framestate-project-v0.4",
+      "target_generation": "framestate-project-v0.5",
+      "donor_repository": "mike-axiom-mir/axm-framestate",
+      "donor_commit": "60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34",
+      "composition_source": {
+        "kind": "connected-monolith-module-snapshot",
+        "archive_sha256": "sha256:f0a0d1d30007d71bb4ded6a9cc03259e5a12ceb7967cd532b12d366ae0cdf55e",
+        "privileged_truth": false
+      },
+      "donor_files": [
+        {
+          "path": "src/axm_framestate/canonical.py",
+          "git_blob": "c44122ce84a238587ee263ca4df95be762992f6e"
+        },
+        {
+          "path": "tests/test_speech.py",
+          "git_blob": "e263a996d0f91ddd922e26fbda19150de3a941b0"
+        }
+      ],
+      "source_fixture_path": "fixtures/generations/framestate-v0.4/project.json",
+      "source_fixture_git_blob": "2531173347a861574d732832b548cb05c2b07ff4",
+      "source_fixture_sha256": "sha256:8e17619c38577478ab737e52d3a52c150f07949cc2c3242f750e157cbf7c830e",
+      "source_canonical_digest": "sha256:ac55e91b3e17ca1cb6e996435a17b0fdbaf8001d480cb6d1932778f9ed3a1ea8",
+      "observed_output_path": "evidence/execution_outputs/framestate-v0.4-to-v0.5-observed.json",
+      "observed_output_sha256": "sha256:a34e5ee9fc266e901941be4f5678f1bd762f4dced4308c5115c1ca7b8dbafd16",
+      "observed_output_canonical_digest": "sha256:102125a406d95a3738736d11505a340e8356efaf558ebc255d0d14c3058923a0",
+      "control_input_path": "fixtures/generations/framestate-v0.5/project.json",
+      "control_input_git_blob": "77379e44fce715b616711f3cf54b166f0eca7455",
+      "control_input_sha256": "sha256:8129fed796b7c34529dd72ec15c0c70cfe7be8ff36da01b478abb040e3c49ea7",
+      "control_input_canonical_digest": "sha256:257550276f9cb93badbabba9678fd9ee4305b20f226449fd46c5e9e309e8417c",
+      "control_output_path": "evidence/execution_outputs/framestate-v0.5-control-observed.json",
+      "control_output_sha256": "sha256:03bcf8f3648ff20eab50ede20f1384e5484b06328b1328a4d472ffe427b0c709",
+      "control_output_canonical_digest": "sha256:446658230447f4184a11bdd0a9859488edfabcff1d1ef683dab30015b1fec1c2",
+      "semantic_claim": {
+        "name": "undeclared_speech_engine",
+        "legacy_output_value": "espeak",
+        "current_control_output_value": "native"
+      },
+      "source_object_unchanged": true,
+      "control_object_unchanged": true,
+      "donor_targeted_tests": {
+        "command": "PYTHONPATH=src python -m unittest tests.test_speech -v",
+        "total": 5,
+        "passed": 5
+      },
+      "forbidden_promotions": {
+        "whole_project_semantic_equivalence_proven": false,
+        "direct_vs_chain_equivalence_proven": false,
+        "chain_experiment_input_ready": false,
+        "canon_authority_granted": false,
+        "adapter_translation_garden_ownership_changed": false
+      }
+    }
+  ]
+}
