@@ -1,0 +1,40 @@
+{
+  "schema": "axm.protocol-evolution.path-execution-ci-replay-observation/v0.1",
+  "observed_at": "2026-09-15T09:20:21Z",
+  "repository": "mike-axiom-mir/axm-protocol-evolution",
+  "pull_request": 29,
+  "workflow": ".github/workflows/verify.yml",
+  "workflow_run_id": 34951974927,
+  "workflow_run_head_sha": "c41c88957e545190a2521db435958a1e41b4e22d",
+  "workflow_run_conclusion": "success",
+  "job": "replay-framestate-v04-v05",
+  "job_id": 104324839243,
+  "job_conclusion": "success",
+  "path_execution_observation_id": "framestate-v0.4-to-v0.5-execution-2026-09-15",
+  "path_id": "framestate-v0.4-to-v0.5-canonical-normalization",
+  "donor_repository": "mike-axiom-mir/axm-framestate",
+  "donor_commit": "60ea68ba72e4ad4df8dc5746c6bb18fcd6569a34",
+  "replay_contract": {
+    "exact_donor_checkout_required": true,
+    "donor_file_git_blobs_verified": true,
+    "source_fixture_identity_verified": true,
+    "control_fixture_identity_verified": true,
+    "source_object_unchanged_required": true,
+    "control_object_unchanged_required": true,
+    "retained_source_output_exactly_reproduced": true,
+    "retained_control_output_exactly_reproduced": true,
+    "legacy_semantic_claim_espeak_preserved": true,
+    "current_control_semantic_claim_native_preserved": true,
+    "targeted_donor_speech_tests_passed": true
+  },
+  "limitations": {
+    "this_is_one_observed_ci_run": true,
+    "future_ci_runs_implied": false,
+    "whole_project_semantic_equivalence_proven": false,
+    "direct_vs_chain_equivalence_proven": false,
+    "chain_experiment_input_ready": false,
+    "canon_authority_granted": false,
+    "adapter_translation_garden_ownership_changed": false,
+    "github_run_cryptographically_attested_by_this_repository": false
+  }
+}
